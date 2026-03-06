@@ -140,7 +140,7 @@ onUnmounted(() => {
           :src="appIcon"
           alt="Poliskollen"
           class="hero-icon anim-hero"
-          style="--i: 1"
+          style="--i: 1; margin-top: 2rem"
         />
 
         <img
