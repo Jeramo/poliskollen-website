@@ -136,11 +136,6 @@ onUnmounted(() => {
       </div>
 
       <div class="hero-content">
-        <div class="hero-badge anim-hero" style="--i: 0">
-          <span class="badge-pulse"></span>
-          Polishändelser i realtid
-        </div>
-
         <img
           :src="appIcon"
           alt="Poliskollen"

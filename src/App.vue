@@ -86,7 +86,6 @@ onUnmounted(() => {
       <div class="container navbar-content">
         <RouterLink to="/" class="logo" @click="closeMobileMenu">
           <img :src="appIcon" alt="Poliskollen" class="logo-icon" />
-          <span class="logo-text">Poliskollen</span>
         </RouterLink>
         
         <!-- Desktop Navigation -->
