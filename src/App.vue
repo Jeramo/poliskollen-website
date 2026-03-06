@@ -417,8 +417,19 @@ main {
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.9375rem;
   position: relative;
+  padding-left: 0;
   padding-bottom: 2px;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, padding-left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-links a::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-size: 0.8125rem;
 }
 
 .footer-links a::after {
@@ -434,6 +445,12 @@ main {
 
 .footer-links a:hover {
   color: var(--text-light);
+  padding-left: 18px;
+}
+
+.footer-links a:hover::before {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .footer-links a:hover::after {
