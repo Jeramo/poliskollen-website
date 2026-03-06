@@ -356,8 +356,7 @@ onUnmounted(() => {
           <div
             v-for="(faq, i) in faqs"
             :key="i"
-            class="faq-item scroll-reveal"
-            :style="{ '--i': i }"
+            class="faq-item"
             :class="{ open: openFaq === i }"
           >
             <button class="faq-question" @click="toggleFaq(i)">
