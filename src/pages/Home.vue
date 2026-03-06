@@ -620,7 +620,19 @@ onUnmounted(() => {
   box-shadow: 0 4px 20px rgba(22, 90, 155, 0.3);
 }
 
+.hero-cta {
+  animation: heroEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+             ctaGlow 3s ease-in-out 2s infinite;
+  animation-delay: calc(var(--i) * 0.12s + 0.1s);
+}
+
+@keyframes ctaGlow {
+  0%, 100% { box-shadow: 0 4px 20px rgba(22, 90, 155, 0.3); }
+  50% { box-shadow: 0 4px 30px rgba(22, 90, 155, 0.55), 0 0 40px rgba(22, 90, 155, 0.15); }
+}
+
 .hero-cta:hover {
+  animation: none;
   transform: translateY(-3px);
   box-shadow: 0 8px 30px rgba(22, 90, 155, 0.4);
   background: var(--poliskollen-accent-dark);
@@ -1310,6 +1322,7 @@ onUnmounted(() => {
   .hero-cta,
   .cta-button {
     transition: none;
+    animation: none !important;
   }
 }
 </style>
