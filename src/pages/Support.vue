@@ -317,7 +317,25 @@ const handleSubmit = async () => {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-2xl);
   padding: 32px;
-  transition: box-shadow 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+}
+
+.support-sidebar .support-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+  border-color: rgba(22, 90, 155, 0.18);
+}
+
+[data-theme="dark"] .support-sidebar .support-card:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .support-sidebar .support-card:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  }
 }
 
 .card-header {
