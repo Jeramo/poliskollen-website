@@ -634,7 +634,7 @@ onUnmounted(() => {
 }
 
 .hero-cta:active {
-  transform: translateY(-1px);
+  transform: scale(0.97);
 }
 
 .hero-meta {
@@ -922,12 +922,12 @@ onUnmounted(() => {
 }
 
 .pricing-cta-primary:active {
-  transform: translateY(0);
+  transform: scale(0.97);
   box-shadow: 0 2px 10px rgba(22, 90, 155, 0.25);
 }
 
 .pricing-cta-secondary:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
 /* ============================================
@@ -1108,7 +1108,7 @@ onUnmounted(() => {
 }
 
 .cta-button:active {
-  transform: translateY(-1px);
+  transform: scale(0.97);
 }
 
 /* ============================================
