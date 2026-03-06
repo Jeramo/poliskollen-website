@@ -163,13 +163,13 @@ onMounted(async () => {
           <!-- Policy text -->
           <div v-else class="policy-text">
             <template v-for="(block, i) in parsedBlocks" :key="i">
-              <h2 v-if="block.type === 'h2'" v-html="block.content"></h2>
-              <h3 v-if="block.type === 'h3'" v-html="block.content"></h3>
-              <p v-if="block.type === 'p'" v-html="block.content"></p>
-              <ul v-if="block.type === 'ul'">
+              <h2 v-if="block.type === 'h2'" class="fade-in-block" :style="{ animationDelay: (i * 30) + 'ms' }" v-html="block.content"></h2>
+              <h3 v-if="block.type === 'h3'" class="fade-in-block" :style="{ animationDelay: (i * 30) + 'ms' }" v-html="block.content"></h3>
+              <p v-if="block.type === 'p'" class="fade-in-block" :style="{ animationDelay: (i * 30) + 'ms' }" v-html="block.content"></p>
+              <ul v-if="block.type === 'ul'" class="fade-in-block" :style="{ animationDelay: (i * 30) + 'ms' }">
                 <li v-for="(item, j) in block.items" :key="j" v-html="item"></li>
               </ul>
-              <hr v-if="block.type === 'hr'" />
+              <hr v-if="block.type === 'hr'" class="fade-in-block" :style="{ animationDelay: (i * 30) + 'ms' }" />
             </template>
           </div>
         </div>
@@ -425,6 +425,22 @@ onMounted(async () => {
   text-decoration: underline;
 }
 
+/* ---- Fade-in animation ---- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-block {
+  animation: fadeInUp 0.4s ease both;
+}
+
 /* ---- Dark mode ---- */
 [data-theme="dark"] .policy-card {
   background: var(--bg-secondary);
@@ -469,6 +485,9 @@ onMounted(async () => {
 @media (prefers-reduced-motion: reduce) {
   .hero-orb {
     display: none;
+  }
+  .fade-in-block {
+    animation: none;
   }
 }
 </style>
