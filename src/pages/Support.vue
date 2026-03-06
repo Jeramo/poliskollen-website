@@ -605,6 +605,14 @@ const handleSubmit = async () => {
 }
 
 /* ---- Responsive ---- */
+@media (min-width: 769px) and (max-width: 960px) {
+  .support-grid {
+    grid-template-columns: 1fr;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}
+
 @media (max-width: 768px) {
   .support-hero {
     padding: 60px var(--space-md) 48px;
