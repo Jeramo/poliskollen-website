@@ -730,6 +730,17 @@ main {
   top: 16px;
 }
 
+/* Custom text selection */
+:global(::selection) {
+  background: rgba(22, 90, 155, 0.2);
+  color: inherit;
+}
+
+:global(::-moz-selection) {
+  background: rgba(22, 90, 155, 0.2);
+  color: inherit;
+}
+
 /* Global focus-visible styles */
 :global(*:focus-visible) {
   outline: 2px solid var(--poliskollen-accent);
