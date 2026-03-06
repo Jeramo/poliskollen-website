@@ -700,6 +700,17 @@ main {
   opacity: 0;
 }
 
+/* Smooth scrolling */
+:global(html) {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(html) {
+    scroll-behavior: auto;
+  }
+}
+
 /* Skip link for accessibility */
 :global(.skip-link) {
   position: absolute;
