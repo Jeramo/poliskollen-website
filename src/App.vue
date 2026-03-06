@@ -743,13 +743,13 @@ main {
 
 /* Global focus-visible styles */
 :global(*:focus-visible) {
-  outline: 2px solid var(--poliskollen-accent);
+  outline: 3px solid var(--poliskollen-accent);
   outline-offset: 2px;
 }
 
 :global(button:focus-visible),
 :global(a:focus-visible) {
-  outline: 2px solid var(--poliskollen-accent);
+  outline: 3px solid var(--poliskollen-accent);
   outline-offset: 3px;
   border-radius: 4px;
 }

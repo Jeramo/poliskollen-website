@@ -1166,17 +1166,17 @@ onUnmounted(() => {
    ============================================ */
 .hero-cta:focus-visible,
 .pricing-cta:focus-visible {
-  outline: 2px solid var(--poliskollen-accent);
+  outline: 3px solid var(--poliskollen-accent);
   outline-offset: 3px;
 }
 
 .cta-button:focus-visible {
-  outline: 2px solid white;
+  outline: 3px solid white;
   outline-offset: 3px;
 }
 
 .faq-question:focus-visible {
-  outline: 2px solid var(--poliskollen-accent);
+  outline: 3px solid var(--poliskollen-accent);
   outline-offset: -3px;
   border-radius: var(--radius-lg);
 }
