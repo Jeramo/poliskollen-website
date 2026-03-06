@@ -19,6 +19,12 @@ const routes = [
 const router = createRouter({
   history: createWebHistory('/poliskollen/'),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    return { top: 0, behavior: 'smooth' }
+  },
 })
 
 // Create and mount app

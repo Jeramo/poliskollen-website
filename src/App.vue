@@ -82,6 +82,7 @@ onUnmounted(() => {
       <div class="container navbar-content">
         <RouterLink to="/" class="logo" @click="closeMobileMenu">
           <img :src="appIcon" alt="Poliskollen" class="logo-icon" />
+          <span class="logo-text">Poliskollen</span>
         </RouterLink>
         
         <!-- Desktop Navigation -->
@@ -277,6 +278,13 @@ main {
   width: 40px;
   height: 40px;
   border-radius: var(--radius-md);
+}
+
+.logo-text {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
 }
 
 .nav-links {
