@@ -292,6 +292,11 @@ main {
   width: 40px;
   height: 40px;
   border-radius: var(--radius-md);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logo:hover .logo-icon {
+  transform: scale(1.1) rotate(-6deg);
 }
 
 .logo-text {
