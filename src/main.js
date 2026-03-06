@@ -17,7 +17,7 @@ const routes = [
 
 // Create router instance
 const router = createRouter({
-  history: createWebHistory('/poliskollen/'),
+  history: createWebHistory('/'),
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
