@@ -727,13 +727,32 @@ onUnmounted(() => {
 }
 
 .feature-card {
+  position: relative;
   padding: 32px 28px;
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
+  overflow: hidden;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.3s ease;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #165A9B, #3D7AB8);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-card:hover::before {
+  transform: scaleX(1);
 }
 
 .feature-card:hover {
@@ -822,10 +841,17 @@ onUnmounted(() => {
   border-color: var(--poliskollen-accent);
   border-width: 2px;
   box-shadow: 0 8px 30px rgba(22, 90, 155, 0.12);
+  animation: proGlow 4s ease-in-out infinite;
+}
+
+@keyframes proGlow {
+  0%, 100% { box-shadow: 0 8px 30px rgba(22, 90, 155, 0.12); }
+  50% { box-shadow: 0 8px 40px rgba(22, 90, 155, 0.22), 0 0 20px rgba(22, 90, 155, 0.06); }
 }
 
 .pricing-card-pro:hover {
-  box-shadow: 0 20px 50px rgba(22, 90, 155, 0.18);
+  animation: none;
+  box-shadow: 0 20px 50px rgba(22, 90, 155, 0.22);
 }
 
 .pricing-popular {
@@ -1327,11 +1353,16 @@ onUnmounted(() => {
 
   .feature-card,
   .pricing-card,
+  .pricing-card-pro,
   .faq-item,
   .hero-cta,
   .cta-button {
     transition: none;
     animation: none !important;
+  }
+
+  .feature-card::before {
+    transition: none;
   }
 }
 </style>
