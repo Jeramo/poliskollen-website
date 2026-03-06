@@ -196,7 +196,7 @@ onUnmounted(() => {
         <div class="section-header scroll-reveal">
           <span class="section-badge">Funktioner</span>
           <h2 id="features-heading">Allt du behöver.<br />Inget du inte behöver.</h2>
-          <p>Sex funktioner designade för att hålla dig informerad.</p>
+          <p>Kraftfulla verktyg som håller dig uppdaterad — dygnet runt.</p>
         </div>
 
         <div class="features-grid">
@@ -254,7 +254,7 @@ onUnmounted(() => {
         <div class="section-header scroll-reveal">
           <span class="section-badge">Priser</span>
           <h2>Enkel prissättning.</h2>
-          <p>Börja gratis. Uppgradera när du vill.</p>
+          <p>Börja gratis — uppgradera när du är redo.</p>
         </div>
 
         <div class="pricing-grid">
@@ -337,7 +337,7 @@ onUnmounted(() => {
               rel="noopener"
               class="pricing-cta pricing-cta-primary"
             >
-              Prova Pro
+              Testa Pro gratis
             </a>
           </div>
         </div>
@@ -393,8 +393,8 @@ onUnmounted(() => {
       </div>
       <div class="cta-content">
         <img :src="appIcon" alt="Poliskollen" class="cta-icon" loading="lazy" />
-        <h2>Redo att börja?</h2>
-        <p>Ladda ner Poliskollen gratis och se vad som händer runt dig.</p>
+        <h2>Missa aldrig en händelse.</h2>
+        <p>Ladda ner Poliskollen gratis och håll koll på vad som händer runt dig — direkt i fickan.</p>
         <a
           href="https://apps.apple.com/app/id6757537288"
           target="_blank"
