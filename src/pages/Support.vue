@@ -403,7 +403,7 @@ const handleSubmit = async () => {
   font-family: inherit;
   background: var(--bg-secondary);
   color: var(--text-primary);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
 .input::placeholder {
@@ -414,8 +414,22 @@ const handleSubmit = async () => {
 .input:focus {
   outline: none;
   border-color: var(--poliskollen-accent);
-  box-shadow: 0 0 0 3px rgba(22, 90, 155, 0.12);
+  box-shadow: 0 0 0 4px rgba(22, 90, 155, 0.1);
   background: var(--bg-primary);
+}
+
+/* ---- Submit button hover ---- */
+.btn.btn-primary {
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn.btn-primary:hover:not(:disabled) {
+  transform: scale(1.03);
+  box-shadow: 0 4px 14px rgba(22, 90, 155, 0.3);
+}
+
+.btn.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .textarea {
