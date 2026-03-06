@@ -126,9 +126,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="home">
+  <div id="main-content" class="home">
     <!-- ============ HERO ============ -->
-    <section class="hero">
+    <section class="hero" aria-label="Introduktion">
       <div class="hero-bg">
         <div class="hero-orb hero-orb-1"></div>
         <div class="hero-orb hero-orb-2"></div>
@@ -191,11 +191,11 @@ onUnmounted(() => {
     </section>
 
     <!-- ============ FEATURES ============ -->
-    <section class="features-section">
+    <section class="features-section" aria-labelledby="features-heading">
       <div class="section-container">
         <div class="section-header scroll-reveal">
           <span class="section-badge">Funktioner</span>
-          <h2>Allt du behöver.<br />Inget du inte behöver.</h2>
+          <h2 id="features-heading">Allt du behöver.<br />Inget du inte behöver.</h2>
           <p>Sex funktioner designade för att hålla dig informerad.</p>
         </div>
 
@@ -730,7 +730,12 @@ onUnmounted(() => {
 .feature-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-  border-color: rgba(22, 90, 155, 0.2);
+  border-color: rgba(22, 90, 155, 0.25);
+}
+
+[data-theme="dark"] .feature-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 
+              0 0 0 1px rgba(22, 90, 155, 0.15);
 }
 
 .feature-icon-wrap {

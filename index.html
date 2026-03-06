@@ -7,12 +7,47 @@
     <meta name="description" content="Få polishändelser direkt i fickan. Poliskollen visar dig händelser nära dig i realtid på en interaktiv karta." />
     <meta name="theme-color" content="#165A9B" />
     <meta name="apple-itunes-app" content="app-id=6757537288" />
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://poliskollen.nu" />
+    <meta property="og:title" content="Poliskollen - Polishändelser i realtid" />
+    <meta property="og:description" content="Hela Sveriges polishändelser i din ficka. Push-notiser, interaktiv karta, Apple Watch och widgets." />
+    <meta property="og:image" content="https://poliskollen.nu/assets/app-icon.png" />
+    <meta name="twitter:card" content="summary" />
+    
     <link rel="icon" type="image/png" href="/assets/app-icon.png" />
+    <link rel="canonical" href="https://poliskollen.nu" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link href="https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-sans/style.min.css" rel="stylesheet" />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Poliskollen",
+      "operatingSystem": "iOS",
+      "applicationCategory": "NewsApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "SEK"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.3",
+        "ratingCount": "6"
+      },
+      "description": "Polishändelser i realtid på en interaktiv karta. Push-notiser, Apple Watch-app och widgets.",
+      "url": "https://apps.apple.com/app/id6757537288"
+    }
+    </script>
+    
     <script type="module" src="/src/main.js"></script>
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Hoppa till innehåll</a>
     <div id="app"></div>
   </body>
 </html>

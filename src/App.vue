@@ -687,4 +687,36 @@ main {
 .page-fade-leave-to {
   opacity: 0;
 }
+
+/* Skip link for accessibility */
+:global(.skip-link) {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--poliskollen-accent);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.2s ease;
+}
+
+:global(.skip-link:focus) {
+  top: 16px;
+}
+
+/* Global focus-visible styles */
+:global(*:focus-visible) {
+  outline: 2px solid var(--poliskollen-accent);
+  outline-offset: 2px;
+}
+
+:global(button:focus-visible),
+:global(a:focus-visible) {
+  outline: 2px solid var(--poliskollen-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 </style>
