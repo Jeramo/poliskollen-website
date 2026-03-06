@@ -915,6 +915,20 @@ onUnmounted(() => {
   gap: 10px;
   font-size: 0.9375rem;
   color: var(--text-secondary);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pricing-features li:nth-child(1) { transition-delay: 0.1s; }
+.pricing-features li:nth-child(2) { transition-delay: 0.18s; }
+.pricing-features li:nth-child(3) { transition-delay: 0.26s; }
+.pricing-features li:nth-child(4) { transition-delay: 0.34s; }
+.pricing-features li:nth-child(5) { transition-delay: 0.42s; }
+
+.scroll-reveal.in-view .pricing-features li {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .pricing-features svg {
@@ -1362,6 +1376,12 @@ onUnmounted(() => {
   }
 
   .feature-card::before {
+    transition: none;
+  }
+
+  .pricing-features li {
+    opacity: 1;
+    transform: none;
     transition: none;
   }
 }
