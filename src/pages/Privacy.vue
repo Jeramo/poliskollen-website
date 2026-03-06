@@ -354,6 +354,14 @@ onMounted(async () => {
   margin: 2rem 0 0.75rem;
   letter-spacing: -0.01em;
   line-height: 1.3;
+  padding-left: 16px;
+  border-left: 3px solid var(--poliskollen-accent);
+  transition: border-color 0.2s ease, padding-left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.policy-text h2:hover {
+  padding-left: 20px;
+  border-left-color: var(--poliskollen-accent-light, #3D7AB8);
 }
 
 .policy-text h2:first-child {
@@ -417,12 +425,16 @@ onMounted(async () => {
 .policy-text a {
   color: var(--poliskollen-accent);
   text-decoration: none;
-  transition: opacity 0.15s ease;
+  background-image: linear-gradient(var(--poliskollen-accent), var(--poliskollen-accent));
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  padding-bottom: 1px;
 }
 
 .policy-text a:hover {
-  opacity: 0.8;
-  text-decoration: underline;
+  background-size: 100% 1.5px;
 }
 
 /* ---- Fade-in animation ---- */
@@ -488,6 +500,14 @@ onMounted(async () => {
   }
   .fade-in-block {
     animation: none;
+  }
+
+  .policy-text h2 {
+    transition: none;
+  }
+
+  .policy-text a {
+    transition: none;
   }
 }
 </style>
