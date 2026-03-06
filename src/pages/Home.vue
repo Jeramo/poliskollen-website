@@ -382,7 +382,7 @@ onUnmounted(() => {
         <div class="cta-orb cta-orb-2"></div>
       </div>
       <div class="cta-content">
-        <img :src="appIcon" alt="Poliskollen" class="cta-icon" />
+        <img :src="appIcon" alt="Poliskollen" class="cta-icon" loading="lazy" />
         <h2>Redo att börja?</h2>
         <p>Ladda ner Poliskollen gratis och se vad som händer runt dig.</p>
         <a

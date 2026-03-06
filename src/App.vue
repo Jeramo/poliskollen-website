@@ -194,7 +194,7 @@ onUnmounted(() => {
       <div class="container">
         <div class="footer-content">
           <div class="footer-brand">
-            <img :src="appIcon" alt="Poliskollen" class="footer-logo" />
+            <img :src="appIcon" alt="Poliskollen" class="footer-logo" loading="lazy" />
             <p>Polishändelser i realtid</p>
           </div>
           
