@@ -6,6 +6,7 @@ import appIcon from './assets/app-icon.png'
 // Scroll to top button visibility
 const showScrollTop = ref(false)
 const isScrolled = ref(false)
+const scrollProgress = ref(0)
 
 // Mobile menu state
 const mobileMenuOpen = ref(false)
@@ -48,6 +49,8 @@ const toggleTheme = () => {
 const handleScroll = () => {
   showScrollTop.value = window.scrollY > 400
   isScrolled.value = window.scrollY > 10
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+  scrollProgress.value = scrollHeight > 0 ? (window.scrollY / scrollHeight) * 100 : 0
 }
 
 const scrollToTop = () => {
@@ -79,6 +82,7 @@ onUnmounted(() => {
   <div class="app">
     <!-- Navigation -->
     <nav class="navbar" :class="{ scrolled: isScrolled }">
+      <div class="scroll-progress-bar" :style="{ width: scrollProgress + '%' }"></div>
       <div class="container navbar-content">
         <RouterLink to="/" class="logo" @click="closeMobileMenu">
           <img :src="appIcon" alt="Poliskollen" class="logo-icon" />
@@ -226,6 +230,17 @@ onUnmounted(() => {
 
 main {
   flex: 1;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--poliskollen-accent), #3D7AB8);
+  z-index: 101;
+  border-radius: 0 2px 2px 0;
 }
 
 /* Navbar */
