@@ -97,7 +97,7 @@ const faqs = [
   },
   {
     q: 'Vad ingår i Poliskollen Pro?',
-    a: 'Pro kostar 29 kr/månad och ger dig AI-assistenten som sammanfattar händelser, quiz-läge, avancerad statistik och prioriterade notiser.',
+    a: 'Pro kostar 9 kr/månad och ger dig AI-assistenten som sammanfattar händelser, quiz-läge, avancerad statistik och prioriterade notiser.',
   },
   {
     q: 'Fungerar appen på Apple Watch?',
@@ -305,7 +305,7 @@ onUnmounted(() => {
             <div class="pricing-header">
               <h3>Pro</h3>
               <div class="pricing-price">
-                <span class="price-amount">29 kr</span>
+                <span class="price-amount">9 kr</span>
                 <span class="price-period">/månad</span>
               </div>
             </div>
