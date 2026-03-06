@@ -1,7 +1,7 @@
 <script setup>
 import { RouterView, RouterLink } from 'vue-router'
 import { ref, onMounted, onUnmounted } from 'vue'
-import appIcon from './assets/app-icon.png'
+const appIcon = '/assets/app-icon.png'
 
 // Scroll to top button visibility
 const showScrollTop = ref(false)

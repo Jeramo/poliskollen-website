@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
-import appIcon from '../assets/app-icon.png'
-import titleText from '../assets/title-text.png'
+const appIcon = '/assets/app-icon.png'
+const titleText = '/assets/title-text.png'
 
 // ---- Scroll reveal ----
 let observer = null
