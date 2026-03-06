@@ -590,6 +590,31 @@ main {
   color: var(--text-primary);
   border-radius: var(--radius-md);
   transition: all 0.2s ease;
+  opacity: 0;
+  transform: translateX(20px);
+  animation: mobileNavIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.mobile-nav-link:nth-child(1) { animation-delay: 0.08s; }
+.mobile-nav-link:nth-child(2) { animation-delay: 0.15s; }
+.mobile-nav-link:nth-child(3) { animation-delay: 0.22s; }
+
+@keyframes mobileNavIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes mobileNavFade {
+  to { opacity: 1; }
+}
+
+@keyframes mobileCtaIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mobile-nav-link:hover,
@@ -602,6 +627,8 @@ main {
   height: 1px;
   background: var(--border-color);
   margin: var(--space-md) 0;
+  opacity: 0;
+  animation: mobileNavFade 0.3s ease 0.28s forwards;
 }
 
 .mobile-theme-toggle {
@@ -618,6 +645,9 @@ main {
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.2s ease;
+  opacity: 0;
+  transform: translateX(20px);
+  animation: mobileNavIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards;
 }
 
 .mobile-theme-toggle:hover {
@@ -638,6 +668,9 @@ main {
   background: var(--poliskollen-accent);
   border-radius: var(--radius-lg);
   transition: all 0.2s ease;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: mobileCtaIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
 }
 
 .mobile-cta:hover {
@@ -768,6 +801,15 @@ main {
 
   .page-fade-enter-from,
   .page-fade-leave-to {
+    transform: none;
+  }
+
+  .mobile-nav-link,
+  .mobile-menu-divider,
+  .mobile-theme-toggle,
+  .mobile-cta {
+    animation: none;
+    opacity: 1;
     transform: none;
   }
 }
