@@ -712,14 +712,22 @@ main {
 }
 
 /* Page transitions */
-.page-fade-enter-active,
-.page-fade-leave-active {
-  transition: opacity 0.25s ease;
+.page-fade-enter-active {
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.page-fade-enter-from,
+.page-fade-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.page-fade-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
 .page-fade-leave-to {
   opacity: 0;
+  transform: translateY(-8px);
 }
 
 /* Smooth scrolling */
@@ -730,6 +738,16 @@ main {
 @media (prefers-reduced-motion: reduce) {
   :global(html) {
     scroll-behavior: auto;
+  }
+
+  .page-fade-enter-active,
+  .page-fade-leave-active {
+    transition: opacity 0.15s ease;
+  }
+
+  .page-fade-enter-from,
+  .page-fade-leave-to {
+    transform: none;
   }
 }
 
