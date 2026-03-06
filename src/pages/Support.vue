@@ -405,6 +405,28 @@ const handleSubmit = async () => {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  position: relative;
+}
+
+.form-group::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--poliskollen-accent);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-group:focus-within::after {
+  transform: scaleX(1);
+}
+
+.form-group:focus-within label {
+  color: var(--poliskollen-accent);
 }
 
 .form-group label {
@@ -481,14 +503,61 @@ const handleSubmit = async () => {
   padding: var(--space-xl) 0;
 }
 
+.success-checkmark {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-lg);
+  display: block;
+}
+
+.success-checkmark circle {
+  fill: none;
+  stroke: #22c55e;
+  stroke-width: 2;
+  stroke-dasharray: 190;
+  stroke-dashoffset: 190;
+  animation: circleDraw 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.success-checkmark path {
+  stroke: #22c55e;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 36;
+  stroke-dashoffset: 36;
+  animation: checkDraw 0.4s cubic-bezier(0.65, 0, 0.45, 1) 0.45s forwards;
+}
+
+@keyframes circleDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes checkDraw {
+  to { stroke-dashoffset: 0; }
+}
+
 .success-message h3 {
   font-size: 1.125rem;
   margin-bottom: var(--space-sm);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: successFadeIn 0.4s ease 0.7s forwards;
 }
 
 .success-message p {
   color: var(--text-secondary);
   font-size: 0.9375rem;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: successFadeIn 0.4s ease 0.85s forwards;
+}
+
+@keyframes successFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ---- Sidebar ---- */
@@ -643,6 +712,19 @@ const handleSubmit = async () => {
 @media (prefers-reduced-motion: reduce) {
   .hero-orb {
     display: none;
+  }
+
+  .success-checkmark circle,
+  .success-checkmark path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .success-message h3,
+  .success-message p {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 </style>
