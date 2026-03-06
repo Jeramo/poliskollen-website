@@ -997,24 +997,24 @@ onUnmounted(() => {
 }
 
 .faq-answer-wrap {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .faq-item.open .faq-answer-wrap {
-  grid-template-rows: 1fr;
+  max-height: 300px;
 }
 
 .faq-answer {
-  overflow: hidden;
+  padding: 0 24px 20px;
 }
 
 .faq-answer p {
-  padding: 0 24px 20px;
   font-size: 0.9375rem;
   color: var(--text-secondary);
   line-height: 1.65;
+  margin: 0;
 }
 
 /* ============================================
