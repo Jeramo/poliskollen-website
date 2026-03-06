@@ -868,6 +868,29 @@ onUnmounted(() => {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.pricing-popular::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: badgeShimmer 3s ease-in-out 2s infinite;
+}
+
+@keyframes badgeShimmer {
+  0% { left: -100%; }
+  30% { left: 100%; }
+  100% { left: 100%; }
 }
 
 .pricing-header {
@@ -1378,6 +1401,10 @@ onUnmounted(() => {
 
   .feature-card::before {
     transition: none;
+  }
+
+  .pricing-popular::after {
+    animation: none;
   }
 
   .pricing-features li {
