@@ -523,7 +523,9 @@ main {
   width: 280px;
   max-width: 80vw;
   height: 100%;
-  background: var(--bg-primary);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: var(--space-xl);
   display: flex;
   flex-direction: column;
@@ -531,8 +533,14 @@ main {
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
 }
 
+[data-theme="dark"] .mobile-menu {
+  background: rgba(28, 28, 30, 0.85);
+}
+
 .mobile-nav-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   padding: var(--space-md) var(--space-sm);
   font-size: 1.125rem;
   font-weight: 500;
@@ -556,6 +564,7 @@ main {
 .mobile-theme-toggle {
   display: flex;
   align-items: center;
+  min-height: 44px;
   gap: var(--space-md);
   padding: var(--space-md) var(--space-sm);
   font-size: 1rem;
@@ -574,7 +583,10 @@ main {
 }
 
 .mobile-cta {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
   margin-top: auto;
   padding: var(--space-md);
   text-align: center;
