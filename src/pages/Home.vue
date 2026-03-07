@@ -1073,15 +1073,21 @@ onUnmounted(() => {
 /* Touch feedback for mobile */
 @media (hover: none) {
   .feature-card:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
     background: var(--bg-secondary);
-    transition-duration: 0.1s;
+    transition-duration: 0.08s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-card:active .feature-icon-wrap {
+    transform: scale(0.95);
   }
 }
 
 [data-theme="dark"] .feature-card:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 
-              0 0 0 1px rgba(22, 90, 155, 0.15);
+              0 0 0 1px rgba(22, 90, 155, 0.15),
+              0 0 30px rgba(61, 122, 184, 0.08);
 }
 
 .feature-icon-wrap {
@@ -1101,6 +1107,16 @@ onUnmounted(() => {
   background: rgba(22, 90, 155, 0.14);
   transform: scale(1.08) rotate(-6deg);
   box-shadow: 0 4px 16px rgba(22, 90, 155, 0.2);
+}
+
+.feature-card:hover .feature-icon-wrap svg {
+  animation: iconPulse 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes iconPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 .feature-icon-wrap svg {
@@ -1435,7 +1451,7 @@ onUnmounted(() => {
   height: 20px;
   color: var(--text-secondary);
   flex-shrink: 0;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
 }
 
 .faq-question:hover .faq-chevron {

@@ -454,8 +454,14 @@ const handleSubmit = async () => {
 .input:focus {
   outline: none;
   border-color: var(--poliskollen-accent);
-  box-shadow: 0 0 0 4px rgba(22, 90, 155, 0.1);
+  box-shadow: 0 0 0 4px rgba(22, 90, 155, 0.12), 0 1px 3px rgba(22, 90, 155, 0.08);
   background: var(--bg-primary);
+  animation: focusRing 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes focusRing {
+  0% { box-shadow: 0 0 0 0 rgba(22, 90, 155, 0.3); }
+  100% { box-shadow: 0 0 0 4px rgba(22, 90, 155, 0.12), 0 1px 3px rgba(22, 90, 155, 0.08); }
 }
 
 /* ---- Submit button hover ---- */
