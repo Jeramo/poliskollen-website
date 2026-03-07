@@ -700,6 +700,11 @@ onUnmounted(() => {
   width: 1px;
   height: 32px;
   background: var(--border-color);
+  transition: background 0.2s ease;
+}
+
+[data-theme="dark"] .stat-divider {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* Stats bounce animation when counting completes */
@@ -1386,6 +1391,10 @@ onUnmounted(() => {
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   border-color: rgba(22, 90, 155, 0.12);
+}
+
+[data-theme="dark"] .faq-item:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(22, 90, 155, 0.1);
 }
 
 /* Touch feedback for mobile */

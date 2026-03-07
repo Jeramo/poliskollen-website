@@ -480,8 +480,8 @@ main {
   position: absolute;
   left: 0;
   opacity: 0;
-  transform: translateX(-4px);
-  transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(-8px);
+  transition: opacity 0.15s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   font-size: 0.8125rem;
 }
 
@@ -719,6 +719,7 @@ main {
 .mobile-cta:hover {
   background: #1a6ab8;
   color: white;
+  box-shadow: 0 4px 20px rgba(22, 90, 155, 0.35);
 }
 
 .mobile-cta:active {
@@ -789,11 +790,17 @@ main {
 }
 
 .scroll-top-btn:hover svg {
-  transform: translateY(-2px);
+  animation: scrollIconBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .scroll-top-btn svg {
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scrollIconBounce {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-4px); }
+  60% { transform: translateY(-2px); }
 }
 
 .scroll-top-btn:active {
