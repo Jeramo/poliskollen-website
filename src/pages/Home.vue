@@ -1448,12 +1448,14 @@ onUnmounted(() => {
   grid-template-rows: 1fr;
 }
 
-.faq-answer-wrap > .faq-answer {
+.faq-answer {
   min-height: 0;
+  overflow: hidden;
+  padding: 0 24px;
 }
 
-.faq-answer {
-  padding: 0 24px 20px;
+.faq-item.open .faq-answer {
+  padding-bottom: 20px;
 }
 
 .faq-answer p {
