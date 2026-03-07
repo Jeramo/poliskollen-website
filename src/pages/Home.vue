@@ -905,6 +905,13 @@ onUnmounted(() => {
   }
 }
 
+/* Keyboard focus for screenshots */
+.screenshot-item:focus-visible .phone-frame {
+  outline: 3px solid var(--poliskollen-accent);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 8px rgba(22, 90, 155, 0.1);
+}
+
 @media (max-width: 768px) {
   .screenshots-section {
     padding: 72px 0 60px;
@@ -1376,7 +1383,14 @@ onUnmounted(() => {
 /* Active tap feedback for touch devices */
 @media (hover: none) {
   .pricing-cta:active {
-    opacity: 0.85;
+    opacity: 0.9;
+    transform: scale(0.96);
+    transition-duration: 0.08s;
+  }
+  
+  .pricing-cta-primary:active {
+    background: #1a6ab8;
+    box-shadow: 0 2px 8px rgba(22, 90, 155, 0.2);
   }
 }
 
@@ -1915,7 +1929,7 @@ onUnmounted(() => {
 }
 
 [data-theme="dark"] .hero-icon {
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(61, 122, 184, 0.15);
 }
 
 [data-theme="dark"] .hero-badge {

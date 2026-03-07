@@ -827,6 +827,16 @@ main {
   transform: translateY(20px) scale(0.8);
 }
 
+/* Subtle attention pulse after appearing */
+.scroll-top-btn {
+  animation: scrollBtnPulse 2s ease-in-out 0.5s;
+}
+
+@keyframes scrollBtnPulse {
+  0%, 100% { box-shadow: 0 4px 12px rgba(22, 90, 155, 0.3); }
+  50% { box-shadow: 0 4px 20px rgba(22, 90, 155, 0.5), 0 0 0 4px rgba(22, 90, 155, 0.1); }
+}
+
 @media (max-width: 768px) {
   .scroll-top-btn {
     bottom: 16px;

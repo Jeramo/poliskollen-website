@@ -583,11 +583,33 @@ const handleSubmit = async () => {
   padding-bottom: 0;
 }
 
+.faq-item {
+  transition: background 0.2s ease, padding-left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  padding-left: 0;
+  margin-left: 0;
+  border-radius: var(--radius-md);
+}
+
+.faq-item:hover {
+  background: rgba(22, 90, 155, 0.04);
+  padding-left: 8px;
+  margin-left: -8px;
+}
+
+[data-theme="dark"] .faq-item:hover {
+  background: rgba(61, 122, 184, 0.08);
+}
+
 .faq-item h4 {
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 4px;
   color: var(--text-primary);
+  transition: color 0.2s ease;
+}
+
+.faq-item:hover h4 {
+  color: var(--poliskollen-accent);
 }
 
 .faq-item p {
