@@ -1284,6 +1284,7 @@ onUnmounted(() => {
 /* ============================================
    RESPONSIVE
    ============================================ */
+/* Mobile styles (max-width: 768px) */
 @media (max-width: 768px) {
   .hero {
     padding: 100px var(--space-md) 60px;
@@ -1296,18 +1297,44 @@ onUnmounted(() => {
     border-radius: 20px;
   }
 
+  .hero-title-image {
+    max-width: 280px;
+  }
+
   .hero-stats {
-    gap: var(--space-md);
-    padding: 14px 20px;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: 16px 24px;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .stat-divider {
+    width: 100%;
+    height: 1px;
+  }
+
+  .stat {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: var(--space-sm);
   }
 
   .stat-value {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
+  }
+
+  .stat-label {
+    text-align: right;
   }
 
   .hero-cta {
     padding: 14px 28px;
     font-size: 1rem;
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
   }
 
   .features-section,
@@ -1321,23 +1348,102 @@ onUnmounted(() => {
     gap: 16px;
   }
 
+  .feature-card {
+    padding: 24px 20px;
+  }
+
+  .feature-icon-wrap {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+  }
+
   .pricing-grid {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+
+  .pricing-card {
+    padding: 24px 20px;
   }
 
   .section-header {
     margin-bottom: 40px;
   }
 
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .faq-question {
+    padding: 16px 20px;
+    font-size: 0.9375rem;
+  }
+
+  .faq-answer {
+    padding: 0 20px 16px;
+  }
+
   .cta-section {
     padding: 72px var(--space-md);
   }
+
+  .cta-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .cta-button {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
 }
 
+/* Tablet styles (769px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
   .features-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .feature-card {
+    padding: 28px 24px;
+  }
+
+  .pricing-grid {
+    gap: 20px;
+    max-width: 680px;
+  }
+
+  .pricing-card {
+    padding: 28px 24px;
+  }
+
+  .section-container {
+    padding: 0 var(--space-xl);
+  }
+
+  .hero-stats {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: 20px 24px;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .stat-divider {
+    display: none;
+  }
+
+  .stat {
+    min-width: 80px;
+  }
+
+  .faq-list {
+    max-width: 600px;
   }
 }
 
