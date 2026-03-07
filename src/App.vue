@@ -319,7 +319,7 @@ main {
 .nav-links a {
   color: var(--text-secondary);
   font-weight: 500;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
   position: relative;
   padding-bottom: 4px;
 }
@@ -328,20 +328,25 @@ main {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 50%;
   width: 0;
   height: 2px;
-  background: var(--poliskollen-accent);
+  background: linear-gradient(90deg, var(--poliskollen-accent), #3D7AB8);
   border-radius: 1px;
-  transition: width 0.25s ease;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-links a:hover::after,
 .nav-links a.router-link-active::after {
   width: 100%;
+  left: 0;
 }
 
-.nav-links a:hover,
+.nav-links a:hover {
+  color: var(--poliskollen-accent);
+  transform: translateY(-1px);
+}
+
 .nav-links a.router-link-active {
   color: var(--poliskollen-accent);
 }
@@ -351,26 +356,50 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
   background: transparent;
   color: var(--text-secondary);
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   margin-left: var(--space-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--poliskollen-accent);
+  border-radius: var(--radius-lg);
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.theme-toggle:hover::before {
+  transform: scale(1);
+  opacity: 0.1;
 }
 
 .theme-toggle:hover {
-  background: var(--bg-secondary);
   color: var(--poliskollen-accent);
+  transform: scale(1.05);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
 }
 
 .theme-toggle svg {
-  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .theme-toggle:hover svg {
-  transform: rotate(15deg);
+  transform: rotate(20deg);
 }
 
 /* Theme icon swap animation */
