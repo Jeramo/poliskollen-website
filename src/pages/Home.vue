@@ -1268,17 +1268,58 @@ onUnmounted(() => {
 .pricing-cta:focus-visible {
   outline: 3px solid var(--poliskollen-accent);
   outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(22, 90, 155, 0.15);
 }
 
 .cta-button:focus-visible {
   outline: 3px solid white;
   outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2);
 }
 
 .faq-question:focus-visible {
   outline: 3px solid var(--poliskollen-accent);
   outline-offset: -3px;
   border-radius: var(--radius-lg);
+  box-shadow: inset 0 0 0 2px rgba(22, 90, 155, 0.1);
+}
+
+/* Feature cards keyboard navigation */
+.feature-card:focus-within {
+  outline: 3px solid var(--poliskollen-accent);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px rgba(22, 90, 155, 0.1);
+}
+
+/* Pricing cards keyboard navigation */
+.pricing-card:focus-within {
+  outline: 3px solid var(--poliskollen-accent);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .feature-card,
+  .pricing-card,
+  .faq-item {
+    border-width: 2px;
+  }
+
+  .hero-cta,
+  .cta-button,
+  .pricing-cta-primary {
+    border: 2px solid transparent;
+  }
+
+  .hero-cta:hover,
+  .cta-button:hover,
+  .pricing-cta-primary:hover {
+    border-color: currentColor;
+  }
+
+  .section-badge {
+    border: 1px solid currentColor;
+  }
 }
 
 /* ============================================

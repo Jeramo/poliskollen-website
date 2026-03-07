@@ -80,8 +80,11 @@ onUnmounted(() => {
 
 <template>
   <div class="app">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Hoppa till innehåll</a>
+    
     <!-- Navigation -->
-    <nav class="navbar" :class="{ scrolled: isScrolled }">
+    <nav class="navbar" :class="{ scrolled: isScrolled }" role="navigation" aria-label="Huvudmeny">
       <div class="scroll-progress-bar" :style="{ width: scrollProgress + '%' }"></div>
       <div class="container navbar-content">
         <RouterLink to="/" class="logo" @click="closeMobileMenu">
@@ -815,22 +818,28 @@ main {
 }
 
 /* Skip link for accessibility */
-:global(.skip-link) {
-  position: absolute;
+.skip-link {
+  position: fixed;
   top: -100%;
   left: 50%;
   transform: translateX(-50%);
   background: var(--poliskollen-accent);
   color: white;
-  padding: 12px 24px;
+  padding: 14px 28px;
   border-radius: var(--radius-lg);
   font-weight: 600;
+  font-size: 0.9375rem;
   z-index: 9999;
-  transition: top 0.2s ease;
+  transition: top 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(22, 90, 155, 0.3);
+  text-decoration: none;
 }
 
-:global(.skip-link:focus) {
+.skip-link:focus {
   top: 16px;
+  outline: 3px solid white;
+  outline-offset: 2px;
+  color: white;
 }
 
 /* Custom text selection */
