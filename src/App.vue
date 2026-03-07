@@ -657,7 +657,8 @@ main {
 
 .mobile-nav-link:active {
   transform: scale(0.97);
-  background: rgba(22, 90, 155, 0.08);
+  background: rgba(22, 90, 155, 0.12);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-menu-divider {
@@ -692,6 +693,11 @@ main {
   color: var(--poliskollen-accent);
 }
 
+.mobile-theme-toggle:active {
+  transform: scale(0.97);
+  -webkit-tap-highlight-color: transparent;
+}
+
 .mobile-cta {
   display: flex;
   align-items: center;
@@ -713,6 +719,11 @@ main {
 .mobile-cta:hover {
   background: #1a6ab8;
   color: white;
+}
+
+.mobile-cta:active {
+  transform: scale(0.97) translateY(1px);
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Mobile Menu Transitions */
@@ -786,7 +797,15 @@ main {
 }
 
 .scroll-top-btn:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.92);
+}
+
+/* Better touch feedback */
+@media (hover: none) {
+  .scroll-top-btn:active {
+    transform: scale(0.88);
+    background: #1a6ab8;
+  }
 }
 
 /* Scroll top transition */

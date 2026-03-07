@@ -683,6 +683,16 @@ onUnmounted(() => {
   color: white;
 }
 
+.hero-cta svg,
+.cta-button svg {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hero-cta:hover svg,
+.cta-button:hover svg {
+  transform: scale(1.12);
+}
+
 .hero-cta:active {
   transform: scale(0.97);
 }
@@ -1414,9 +1424,14 @@ onUnmounted(() => {
 
 .faq-question:focus-visible {
   outline: 3px solid var(--poliskollen-accent);
-  outline-offset: -3px;
+  outline-offset: 2px;
   border-radius: var(--radius-lg);
-  box-shadow: inset 0 0 0 2px rgba(22, 90, 155, 0.1);
+  box-shadow: 0 0 0 5px rgba(22, 90, 155, 0.1);
+}
+
+.faq-question:active {
+  background: var(--bg-secondary);
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Feature cards keyboard navigation */
