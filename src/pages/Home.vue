@@ -980,6 +980,15 @@ onUnmounted(() => {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: var(--space-lg);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.25s ease,
+              background 0.25s ease;
+}
+
+.section-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(22, 90, 155, 0.12);
+  box-shadow: 0 4px 12px rgba(22, 90, 155, 0.15);
 }
 
 .section-header h2 {

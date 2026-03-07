@@ -245,6 +245,12 @@ main {
   background: linear-gradient(90deg, var(--poliskollen-accent), #3D7AB8);
   z-index: 101;
   border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px rgba(22, 90, 155, 0.3);
+}
+
+[data-theme="dark"] .scroll-progress-bar {
+  background: linear-gradient(90deg, #3D7AB8, #5A9BD4);
+  box-shadow: 0 0 12px rgba(90, 155, 212, 0.5);
 }
 
 /* Navbar */
@@ -446,6 +452,12 @@ main {
   width: 60px;
   height: 60px;
   border-radius: var(--radius-lg);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.footer-logo:hover {
+  transform: scale(1.08) rotate(-4deg);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .footer-brand p {
@@ -613,6 +625,7 @@ main {
 }
 
 .mobile-nav-link {
+  position: relative;
   display: flex;
   align-items: center;
   min-height: 44px;
@@ -659,6 +672,23 @@ main {
   transform: scale(0.97);
   background: rgba(22, 90, 155, 0.12);
   -webkit-tap-highlight-color: transparent;
+  transition-duration: 0.08s;
+}
+
+/* Subtle press feedback */
+.mobile-nav-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  background: var(--poliskollen-accent);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.mobile-nav-link:active::after {
+  opacity: 0.08;
 }
 
 .mobile-menu-divider {
@@ -795,6 +825,13 @@ main {
 
 .scroll-top-btn svg {
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Focus visible state for scroll button */
+.scroll-top-btn:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+  box-shadow: 0 6px 16px rgba(22, 90, 155, 0.4), 0 0 0 6px rgba(22, 90, 155, 0.15);
 }
 
 @keyframes scrollIconBounce {
