@@ -655,6 +655,11 @@ main {
   color: var(--poliskollen-accent);
 }
 
+.mobile-nav-link:active {
+  transform: scale(0.97);
+  background: rgba(22, 90, 155, 0.08);
+}
+
 .mobile-menu-divider {
   height: 1px;
   background: var(--border-color);
@@ -767,9 +772,17 @@ main {
 }
 
 .scroll-top-btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.05);
   box-shadow: 0 6px 16px rgba(22, 90, 155, 0.4);
   background: #1a6ab8;
+}
+
+.scroll-top-btn:hover svg {
+  transform: translateY(-2px);
+}
+
+.scroll-top-btn svg {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .scroll-top-btn:active {

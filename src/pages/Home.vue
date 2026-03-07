@@ -560,8 +560,8 @@ onUnmounted(() => {
 }
 
 @keyframes iconFloat {
-  0%, 100% { transform: translateY(0) perspective(500px) rotateX(0) rotateY(0); }
-  50% { transform: translateY(-8px) perspective(500px) rotateX(0) rotateY(0); }
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.02); }
 }
 
 .hero-icon:hover {
@@ -868,12 +868,14 @@ onUnmounted(() => {
   background: rgba(22, 90, 155, 0.08);
   border-radius: var(--radius-lg);
   margin-bottom: 20px;
-  transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 8px rgba(22, 90, 155, 0.08);
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .feature-card:hover .feature-icon-wrap {
   background: rgba(22, 90, 155, 0.14);
   transform: scale(1.08) rotate(-6deg);
+  box-shadow: 0 4px 16px rgba(22, 90, 155, 0.2);
 }
 
 .feature-icon-wrap svg {
@@ -1130,6 +1132,13 @@ onUnmounted(() => {
   transform: scale(0.97);
 }
 
+/* Active tap feedback for touch devices */
+@media (hover: none) {
+  .pricing-cta:active {
+    opacity: 0.85;
+  }
+}
+
 /* ============================================
    FAQ SECTION
    ============================================ */
@@ -1197,7 +1206,11 @@ onUnmounted(() => {
   height: 20px;
   color: var(--text-secondary);
   flex-shrink: 0;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+}
+
+.faq-question:hover .faq-chevron {
+  color: var(--poliskollen-accent);
 }
 
 .faq-item.open .faq-chevron {
