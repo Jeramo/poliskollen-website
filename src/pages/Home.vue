@@ -582,6 +582,11 @@ onUnmounted(() => {
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: var(--space-2xl);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .hero-tagline {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* Hero stats */
@@ -594,6 +599,15 @@ onUnmounted(() => {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
   margin-bottom: var(--space-2xl);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+
+.hero-stats:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-color: rgba(22, 90, 155, 0.2);
 }
 
 .stat {
@@ -787,6 +801,14 @@ onUnmounted(() => {
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+
+/* Staggered entrance for feature cards */
+.features-grid .feature-card:nth-child(1) { --i: 0; }
+.features-grid .feature-card:nth-child(2) { --i: 1; }
+.features-grid .feature-card:nth-child(3) { --i: 2; }
+.features-grid .feature-card:nth-child(4) { --i: 3; }
+.features-grid .feature-card:nth-child(5) { --i: 4; }
+.features-grid .feature-card:nth-child(6) { --i: 5; }
 
 .feature-card {
   position: relative;
@@ -1618,6 +1640,17 @@ onUnmounted(() => {
 
 [data-theme="dark"] .feature-card:hover .feature-icon-wrap {
   background: rgba(61, 122, 184, 0.22);
+  box-shadow: 0 4px 20px rgba(61, 122, 184, 0.3);
+}
+
+[data-theme="dark"] .section-badge {
+  background: rgba(61, 122, 184, 0.15);
+  box-shadow: 0 0 20px rgba(61, 122, 184, 0.15);
+}
+
+[data-theme="dark"] .hero-stats:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  border-color: rgba(61, 122, 184, 0.3);
 }
 
 [data-theme="dark"] .pricing-card {
