@@ -29,25 +29,33 @@ const reviewCount = ref(0)
 const statsRef = ref(null)
 let statsStarted = false
 
-const animateValue = (refVal, target, duration = 1500, decimals = 0) => {
+const animateValue = (refVal, target, duration = 1500, decimals = 0, onComplete) => {
   const start = performance.now()
+  const eased = (t) => 1 - Math.pow(2, -10 * t)
   const step = (now) => {
     const elapsed = now - start
     const progress = Math.min(elapsed / duration, 1)
-    const eased = 1 - Math.pow(2, -10 * progress)
     refVal.value = decimals
-      ? parseFloat((target * eased).toFixed(decimals))
-      : Math.round(target * eased)
-    if (progress < 1) requestAnimationFrame(step)
+      ? parseFloat((target * eased(progress)).toFixed(decimals))
+      : Math.round(target * eased(progress))
+    if (progress < 1) {
+      requestAnimationFrame(step)
+    } else if (onComplete) {
+      onComplete()
+    }
   }
   requestAnimationFrame(step)
 }
+
+const statsBounced = ref(false)
 
 const startCounters = () => {
   if (statsStarted) return
   statsStarted = true
   animateValue(ratingCount, 4.3, 2000, 1)
-  animateValue(reviewCount, 6, 1500)
+  animateValue(reviewCount, 6, 1500, 0, () => {
+    statsBounced.value = true
+  })
 }
 
 // ---- FAQ accordion ----
@@ -154,7 +162,7 @@ onUnmounted(() => {
           Hela Sveriges polishändelser.<br />I din ficka. I realtid.
         </p>
 
-        <div class="hero-stats anim-hero" ref="statsRef" style="--i: 4">
+        <div class="hero-stats anim-hero" :class="{ 'stats-bounce': statsBounced }" ref="statsRef" style="--i: 4">
           <div class="stat">
             <span class="stat-value">{{ ratingCount }} ★</span>
             <span class="stat-label">Betyg</span>
@@ -552,8 +560,14 @@ onUnmounted(() => {
 }
 
 @keyframes iconFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%, 100% { transform: translateY(0) perspective(500px) rotateX(0) rotateY(0); }
+  50% { transform: translateY(-8px) perspective(500px) rotateX(0) rotateY(0); }
+}
+
+.hero-icon:hover {
+  animation: none;
+  transform: perspective(500px) rotateX(-8deg) rotateY(8deg) scale(1.05);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .hero-title-image {
@@ -610,6 +624,17 @@ onUnmounted(() => {
   background: var(--border-color);
 }
 
+/* Stats bounce animation when counting completes */
+.stats-bounce .stat-value {
+  animation: statBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes statBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
 /* Hero CTA */
 .hero-cta {
   display: inline-flex;
@@ -661,18 +686,27 @@ onUnmounted(() => {
   left: 50%;
   width: 0;
   height: 0;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
   opacity: 0;
 }
 
 .hero-cta:active::before {
-  width: 300px;
-  height: 300px;
-  opacity: 0;
-  transition: width 0s, height 0s, opacity 0.6s ease;
+  animation: buttonRipple 0.6s ease-out;
+}
+
+@keyframes buttonRipple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
 }
 
 .hero-meta {
@@ -1036,6 +1070,32 @@ onUnmounted(() => {
   font-weight: 600;
   font-size: 0.9375rem;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-cta::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.pricing-cta-primary::before {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.pricing-cta-secondary::before {
+  background: rgba(22, 90, 155, 0.15);
+}
+
+.pricing-cta:active::before {
+  animation: buttonRipple 0.6s ease-out;
 }
 
 .pricing-cta-secondary {
@@ -1145,13 +1205,18 @@ onUnmounted(() => {
 }
 
 .faq-answer-wrap {
-  max-height: 0;
+  display: grid;
+  grid-template-rows: 0fr;
   overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .faq-item.open .faq-answer-wrap {
-  max-height: 300px;
+  grid-template-rows: 1fr;
+}
+
+.faq-answer-wrap > .faq-answer {
+  min-height: 0;
 }
 
 .faq-answer {
@@ -1273,18 +1338,27 @@ onUnmounted(() => {
   left: 50%;
   width: 0;
   height: 0;
-  background: rgba(22, 90, 155, 0.25);
+  background: rgba(22, 90, 155, 0.3);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
   opacity: 0;
 }
 
 .cta-button:active::before {
-  width: 300px;
-  height: 300px;
-  opacity: 0;
-  transition: width 0s, height 0s, opacity 0.6s ease;
+  animation: buttonRippleBlue 0.6s ease-out;
+}
+
+@keyframes buttonRippleBlue {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
 }
 
 /* ============================================
