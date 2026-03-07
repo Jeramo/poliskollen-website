@@ -811,6 +811,15 @@ onUnmounted(() => {
   border-color: rgba(22, 90, 155, 0.25);
 }
 
+/* Touch feedback for mobile */
+@media (hover: none) {
+  .feature-card:active {
+    transform: scale(0.98);
+    background: var(--bg-secondary);
+    transition-duration: 0.1s;
+  }
+}
+
 [data-theme="dark"] .feature-card:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 
               0 0 0 1px rgba(22, 90, 155, 0.15);
@@ -885,6 +894,14 @@ onUnmounted(() => {
 .pricing-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Touch feedback for mobile */
+@media (hover: none) {
+  .pricing-card:active {
+    transform: scale(0.98);
+    transition-duration: 0.1s;
+  }
 }
 
 .pricing-card-pro {
@@ -1080,6 +1097,15 @@ onUnmounted(() => {
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   border-color: rgba(22, 90, 155, 0.12);
+}
+
+/* Touch feedback for mobile */
+@media (hover: none) {
+  .faq-item:active {
+    transform: scale(0.99);
+    background: var(--bg-secondary);
+    transition-duration: 0.1s;
+  }
 }
 
 .faq-item.open {
