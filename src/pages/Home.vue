@@ -1463,24 +1463,18 @@ onUnmounted(() => {
 }
 
 .faq-answer-wrap {
-  display: grid;
-  grid-template-rows: 0fr;
+  max-height: 0;
   overflow: hidden;
-  transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.3s ease;
 }
 
 .faq-item.open .faq-answer-wrap {
-  grid-template-rows: 1fr;
+  max-height: 300px;
 }
 
 .faq-answer {
-  min-height: 0;
-  overflow: hidden;
-  padding: 0 24px;
-}
-
-.faq-item.open .faq-answer {
-  padding-bottom: 20px;
+  padding: 0 24px 20px;
 }
 
 .faq-answer p {
