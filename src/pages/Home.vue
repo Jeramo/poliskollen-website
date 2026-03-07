@@ -198,6 +198,70 @@ onUnmounted(() => {
       </div>
     </section>
 
+    <!-- ============ SCREENSHOTS ============ -->
+    <section class="screenshots-section" aria-labelledby="screenshots-heading">
+      <div class="section-container">
+        <div class="section-header scroll-reveal">
+          <span class="section-badge">Se appen</span>
+          <h2 id="screenshots-heading">Kraftfull design.<br />Enkel att använda.</h2>
+          <p>Utforska händelser, statistik och trender — allt i en ren, modern upplevelse.</p>
+        </div>
+      </div>
+      
+      <div class="screenshots-scroll">
+        <div class="screenshots-track">
+          <div class="screenshot-item scroll-reveal" style="--i: 0">
+            <div class="phone-frame">
+              <img src="/screenshots/1-events.jpg" alt="Händelselista" loading="lazy" />
+            </div>
+            <span class="screenshot-label">Händelser</span>
+          </div>
+          <div class="screenshot-item scroll-reveal" style="--i: 1">
+            <div class="phone-frame">
+              <img src="/screenshots/7-heatmap.jpg" alt="Värmekarta" loading="lazy" />
+            </div>
+            <span class="screenshot-label">Värmekarta</span>
+          </div>
+          <div class="screenshot-item scroll-reveal" style="--i: 2">
+            <div class="phone-frame">
+              <img src="/screenshots/8-detail.jpg" alt="Händelsedetalj" loading="lazy" />
+            </div>
+            <span class="screenshot-label">Detaljer</span>
+          </div>
+          <div class="screenshot-item scroll-reveal" style="--i: 3">
+            <div class="phone-frame">
+              <img src="/screenshots/6-trends.jpg" alt="Trender" loading="lazy" />
+            </div>
+            <span class="screenshot-label">Trender</span>
+          </div>
+          <div class="screenshot-item scroll-reveal" style="--i: 4">
+            <div class="phone-frame">
+              <img src="/screenshots/5-patterns.jpg" alt="Mönsterdetektiven" loading="lazy" />
+            </div>
+            <span class="screenshot-label">Mönster</span>
+          </div>
+          <div class="screenshot-item scroll-reveal" style="--i: 5">
+            <div class="phone-frame">
+              <img src="/screenshots/4-quiz.jpg" alt="Quiz" loading="lazy" />
+            </div>
+            <span class="screenshot-label">Quiz</span>
+          </div>
+          <div class="screenshot-item scroll-reveal" style="--i: 6">
+            <div class="phone-frame">
+              <img src="/screenshots/3-achievements.jpg" alt="Prestationer" loading="lazy" />
+            </div>
+            <span class="screenshot-label">Prestationer</span>
+          </div>
+          <div class="screenshot-item scroll-reveal" style="--i: 7">
+            <div class="phone-frame">
+              <img src="/screenshots/2-social.jpg" alt="Social" loading="lazy" />
+            </div>
+            <span class="screenshot-label">Aktivitet</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ FEATURES ============ -->
     <section class="features-section" aria-labelledby="features-heading">
       <div class="section-container">
@@ -737,6 +801,130 @@ onUnmounted(() => {
   margin-top: var(--space-lg);
   font-size: 0.8125rem;
   color: var(--text-secondary);
+}
+
+/* ============================================
+   SCREENSHOTS SECTION
+   ============================================ */
+.screenshots-section {
+  padding: 100px 0 80px;
+  overflow: hidden;
+}
+
+.screenshots-scroll {
+  margin-top: 48px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 20px 0 40px;
+}
+
+.screenshots-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.screenshots-track {
+  display: flex;
+  gap: 24px;
+  padding: 0 max(24px, calc((100vw - 1100px) / 2));
+  width: max-content;
+}
+
+.screenshot-item {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.phone-frame {
+  position: relative;
+  width: 220px;
+  background: #1c1c1e;
+  border-radius: 32px;
+  padding: 8px;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s ease;
+}
+
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 24px;
+  background: #000;
+  border-radius: 12px;
+  z-index: 10;
+}
+
+.phone-frame img {
+  width: 100%;
+  height: auto;
+  border-radius: 24px;
+  display: block;
+}
+
+.screenshot-item:hover .phone-frame {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 35px 60px -15px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.15),
+    0 0 40px rgba(22, 90, 155, 0.15);
+}
+
+.screenshot-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.screenshot-item:hover .screenshot-label {
+  color: var(--poliskollen-accent);
+}
+
+/* Touch feedback for mobile */
+@media (hover: none) {
+  .screenshot-item:active .phone-frame {
+    transform: scale(0.98);
+    transition-duration: 0.1s;
+  }
+}
+
+@media (max-width: 768px) {
+  .screenshots-section {
+    padding: 72px 0 60px;
+  }
+  
+  .screenshots-track {
+    gap: 16px;
+    padding: 0 20px;
+  }
+  
+  .phone-frame {
+    width: 180px;
+    border-radius: 28px;
+    padding: 6px;
+  }
+  
+  .phone-frame::before {
+    width: 60px;
+    height: 20px;
+    top: 10px;
+  }
+  
+  .phone-frame img {
+    border-radius: 22px;
+  }
 }
 
 /* ============================================
