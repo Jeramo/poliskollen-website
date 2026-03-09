@@ -1,5 +1,33 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const supportFaqs = [
+  { q: 'Hur aktiverar jag push-notiser?', a: 'Gå till Inställningar i appen och aktivera notiser för de områden du vill bevaka.' },
+  { q: 'Är appen gratis?', a: 'Ja! Grundfunktionerna är helt gratis. Premium-prenumeration låser upp extra funktioner.' },
+  { q: 'Varifrån kommer informationen?', a: 'All information hämtas från Polisens officiella händelseflöde.' },
+]
+
+onMounted(() => {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: supportFaqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: { '@type': 'Answer', text: faq.a },
+    })),
+  }
+  const script = document.createElement('script')
+  script.type = 'application/ld+json'
+  script.id = 'support-faq-schema'
+  script.textContent = JSON.stringify(schema)
+  document.head.appendChild(script)
+})
+
+onUnmounted(() => {
+  const el = document.getElementById('support-faq-schema')
+  if (el) el.remove()
+})
 
 const FORMSPREE_FORM_ID = 'mvgqyvgn'
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`
@@ -187,7 +215,7 @@ const handleSubmit = async () => {
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
-                support@poliskollen.se
+                support@poliskollen.nu
               </a>
             </div>
           </div>
