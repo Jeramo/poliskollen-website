@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
+import { useFaqSchema } from '../composables/useFaqSchema.js'
 
 const supportFaqs = [
   { q: 'Hur aktiverar jag push-notiser?', a: 'Gå till Inställningar i appen och aktivera notiser för de områden du vill bevaka.' },
@@ -7,27 +8,7 @@ const supportFaqs = [
   { q: 'Varifrån kommer informationen?', a: 'All information hämtas från Polisens officiella händelseflöde.' },
 ]
 
-onMounted(() => {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: supportFaqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.q,
-      acceptedAnswer: { '@type': 'Answer', text: faq.a },
-    })),
-  }
-  const script = document.createElement('script')
-  script.type = 'application/ld+json'
-  script.id = 'support-faq-schema'
-  script.textContent = JSON.stringify(schema)
-  document.head.appendChild(script)
-})
-
-onUnmounted(() => {
-  const el = document.getElementById('support-faq-schema')
-  if (el) el.remove()
-})
+useFaqSchema(supportFaqs, 'support-faq-schema')
 
 const FORMSPREE_FORM_ID = 'mvgqyvgn'
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`
@@ -181,19 +162,9 @@ const handleSubmit = async () => {
                 <h3>Vanliga frågor</h3>
               </div>
 
-              <div class="faq-item">
-                <h4>Hur aktiverar jag push-notiser?</h4>
-                <p>Gå till Inställningar i appen och aktivera notiser för de områden du vill bevaka.</p>
-              </div>
-
-              <div class="faq-item">
-                <h4>Är appen gratis?</h4>
-                <p>Ja! Grundfunktionerna är helt gratis. Premium-prenumeration låser upp extra funktioner.</p>
-              </div>
-
-              <div class="faq-item">
-                <h4>Varifrån kommer informationen?</h4>
-                <p>All information hämtas från Polisens officiella händelseflöde.</p>
+              <div v-for="(faq, i) in supportFaqs" :key="i" class="faq-item">
+                <h4>{{ faq.q }}</h4>
+                <p>{{ faq.a }}</p>
               </div>
             </div>
 

@@ -50,12 +50,11 @@ const router = createRouter({
 
 // Update document head on each navigation
 const BASE_URL = 'https://poliskollen.nu'
-const DEFAULT_TITLE = 'Poliskollen - Polishändelser i realtid'
-const DEFAULT_DESC = 'Få polishändelser direkt i fickan. Poliskollen visar dig händelser nära dig i realtid på en interaktiv karta med push-notiser och Apple Watch-stöd.'
+const homeRoute = routes.find((r) => r.path === '/')
 
 router.afterEach((to) => {
-  const title = to.meta.title || DEFAULT_TITLE
-  const description = to.meta.description || DEFAULT_DESC
+  const title = to.meta.title || homeRoute.meta.title
+  const description = to.meta.description || homeRoute.meta.description
   const canonicalUrl = BASE_URL + (to.path === '/' ? '' : to.path)
 
   document.title = title

@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { useFaqSchema } from '../composables/useFaqSchema.js'
 const appIcon = '/assets/app-icon.png'
 const titleText = '/assets/title-text.png'
 
@@ -121,39 +122,17 @@ const faqs = [
   },
 ]
 
-// ---- FAQPage structured data ----
-const injectFaqSchema = () => {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.a,
-      },
-    })),
-  }
-  const script = document.createElement('script')
-  script.type = 'application/ld+json'
-  script.id = 'faq-schema'
-  script.textContent = JSON.stringify(schema)
-  document.head.appendChild(script)
-}
+useFaqSchema(faqs, 'faq-schema')
 
 onMounted(async () => {
   await nextTick()
   setupScrollReveal()
-  injectFaqSchema()
   // Start counters after hero animation settles
   setTimeout(startCounters, 1200)
 })
 
 onUnmounted(() => {
   if (observer) observer.disconnect()
-  const el = document.getElementById('faq-schema')
-  if (el) el.remove()
 })
 </script>
 
