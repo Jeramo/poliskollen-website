@@ -200,7 +200,7 @@ const reviews = [
       <div ref="aiRef" class="feature-layout reversed container">
         <div class="feature-text">
           <span class="section-label">Detaljer</span>
-          <h2 id="ai-heading">Hela bilden. Sammanfattad. <span class="pro-badge">PRO</span></h2>
+          <h2 id="ai-heading">Hela bilden. Sammanfattad.</h2>
           <p class="section-copy">AI-sammanfattning, fullständig rapport och plats på kartan. Allt du behöver veta om varje händelse.</p>
         </div>
         <div class="feature-phone">
