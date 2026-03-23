@@ -1,6 +1,7 @@
 <script setup>
-import { RouterView, RouterLink } from 'vue-router'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { RouterView, RouterLink, useRoute } from 'vue-router'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { useScrollDirection } from './composables/useScrollDirection.js'
 const appIcon = '/assets/app-icon.png'
 
 // Scroll to top button visibility
@@ -8,18 +9,27 @@ const showScrollTop = ref(false)
 const isScrolled = ref(false)
 const scrollProgress = ref(0)
 
+// Scroll direction for nav hide/show
+const { direction: scrollDir, isDisabled: scrollDirDisabled } = useScrollDirection()
+const navHidden = computed(() => scrollDir.value === 'down')
+
+// Route-based conditional
+const route = useRoute()
+const isHome = computed(() => route.path === '/')
+
 // Mobile menu state
 const mobileMenuOpen = ref(false)
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
-  // Prevent body scroll when menu is open
   document.body.style.overflow = mobileMenuOpen.value ? 'hidden' : ''
+  scrollDirDisabled.value = mobileMenuOpen.value
 }
 
 const closeMobileMenu = () => {
   mobileMenuOpen.value = false
   document.body.style.overflow = ''
+  scrollDirDisabled.value = false
 }
 
 // Theme management
@@ -37,7 +47,11 @@ const initTheme = () => {
 }
 
 const applyTheme = () => {
-  document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
+  if (isHome.value) {
+    document.documentElement.setAttribute('data-theme', 'dark')
+  } else {
+    document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
+  }
 }
 
 const toggleTheme = () => {
@@ -45,6 +59,10 @@ const toggleTheme = () => {
   localStorage.setItem('poliskollen-theme', isDark.value ? 'dark' : 'light')
   applyTheme()
 }
+
+watch(isHome, () => {
+  applyTheme()
+})
 
 const handleScroll = () => {
   showScrollTop.value = window.scrollY > 400
@@ -84,7 +102,7 @@ onUnmounted(() => {
     <a href="#main-content" class="skip-link">Hoppa till innehåll</a>
     
     <!-- Navigation -->
-    <nav class="navbar" :class="{ scrolled: isScrolled }" role="navigation" aria-label="Huvudmeny">
+    <nav class="navbar" :class="{ scrolled: isScrolled, 'nav-hidden': navHidden && !mobileMenuOpen }" role="navigation" aria-label="Huvudmeny">
       <div class="scroll-progress-bar" :style="{ width: scrollProgress + '%' }"></div>
       <div class="container navbar-content">
         <RouterLink to="/" class="logo" @click="closeMobileMenu">
@@ -97,6 +115,7 @@ onUnmounted(() => {
           <RouterLink to="/support">Support</RouterLink>
           <RouterLink to="/privacy">Integritet</RouterLink>
           <button
+            v-show="!isHome"
             class="theme-toggle"
             @click="toggleTheme"
             :aria-label="isDark ? 'Byt till ljust lage' : 'Byt till morkt lage'"
@@ -144,8 +163,9 @@ onUnmounted(() => {
           <RouterLink to="/support" class="mobile-nav-link" @click="closeMobileMenu">Support</RouterLink>
           <RouterLink to="/privacy" class="mobile-nav-link" @click="closeMobileMenu">Integritet</RouterLink>
           <div class="mobile-menu-divider"></div>
-          <button 
-            class="mobile-theme-toggle" 
+          <button
+            v-show="!isHome"
+            class="mobile-theme-toggle"
             @click="toggleTheme"
           >
             <svg v-if="isDark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -264,7 +284,7 @@ main {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: none;
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .navbar.scrolled {
@@ -273,6 +293,10 @@ main {
 
 [data-theme="dark"] .navbar.scrolled {
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+.navbar.nav-hidden {
+  transform: translateY(-100%);
 }
 
 [data-theme="dark"] .navbar {
