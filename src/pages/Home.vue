@@ -237,12 +237,13 @@ const reviews = [
             </svg>
             App Store
           </a>
-          <a :href="PLAY_STORE_URL" target="_blank" rel="noopener" class="cp-store-btn cp-store-btn-android">
+          <span class="cp-store-btn cp-store-btn-android cp-store-btn-soon" aria-disabled="true">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92m10.89 10.893 2.302 2.302-10.937 6.333zM21.176 12 17.792 9.939 14.499 13.5 17.79 16.06zm-12.812-7.59 10.937 6.333-2.302 2.302z"/>
             </svg>
             Google Play
-          </a>
+            <em class="cp-soon-tag">Kommer snart</em>
+          </span>
         </div>
 
         <p class="cp-foot">
@@ -686,6 +687,26 @@ const reviews = [
 .cp-store-btn-android:hover {
   background: rgba(61, 199, 130, 0.12);
   border-color: rgba(61, 199, 130, 0.35);
+}
+
+.cp-store-btn-soon {
+  opacity: 0.7;
+  cursor: default;
+  pointer-events: none;
+}
+
+.cp-soon-tag {
+  margin-left: 6px;
+  padding: 2px 8px;
+  background: rgba(255, 159, 64, 0.18);
+  border: 1px solid rgba(255, 159, 64, 0.30);
+  border-radius: 999px;
+  color: #FFB876;
+  font-size: 0.6875rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .cp-foot {

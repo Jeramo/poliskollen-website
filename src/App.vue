@@ -238,7 +238,7 @@ onUnmounted(() => {
           <div class="footer-links">
             <h4>Ladda ner</h4>
             <a href="https://apps.apple.com/app/poliskollen" target="_blank" rel="noopener">App Store</a>
-            <a href="https://play.google.com/store/apps/details?id=com.jeramo.poliskollen" target="_blank" rel="noopener">Google Play</a>
+            <span class="coming-soon">Google Play (kommer snart)</span>
           </div>
 
           <div class="footer-links">
@@ -572,6 +572,12 @@ main {
 
 .footer-source a:hover {
   color: var(--text-light);
+}
+
+.coming-soon {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9375rem;
+  font-style: italic;
 }
 
 .footer-bottom {
