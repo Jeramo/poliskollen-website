@@ -8,6 +8,10 @@ import PhoneFrame from '../components/PhoneFrame.vue'
 
 const appIcon = '/assets/app-icon.png'
 const APP_STORE_URL = 'https://apps.apple.com/app/id6757537288'
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.jeramo.poliskollen'
+
+// ---- Platform toggle ----
+const selectedPlatform = ref('ios')
 
 // ---- Animated counters ----
 const { display: ratingDisplay, elRef: ratingRef } = useAnimatedCounter(4.3, { duration: 2000, decimals: 1, suffix: ' ★' })
@@ -170,53 +174,75 @@ const reviews = [
         <div class="cp-header">
           <span class="cp-eyebrow">Nyhet</span>
           <h2 id="platforms-heading" class="cp-title">Samma upplevelse — iPhone &amp; Android</h2>
-          <p class="cp-sub">Pixelperfekt parity. Välj din plattform, vi möter dig där du är.</p>
+          <p class="cp-sub">Pixelperfekt parity. Välj din plattform.</p>
         </div>
 
-        <div class="cp-grid">
-          <div class="cp-card">
-            <div class="cp-badge cp-badge-ios">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-              </svg>
-              iOS
-            </div>
+        <div
+          class="cp-toggle"
+          role="tablist"
+          aria-label="Välj plattform"
+          :data-active="selectedPlatform"
+        >
+          <button
+            type="button"
+            role="tab"
+            :aria-selected="selectedPlatform === 'ios'"
+            class="cp-toggle-btn"
+            :class="{ active: selectedPlatform === 'ios' }"
+            @click="selectedPlatform = 'ios'"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+            </svg>
+            iPhone
+          </button>
+          <button
+            type="button"
+            role="tab"
+            :aria-selected="selectedPlatform === 'android'"
+            class="cp-toggle-btn"
+            :class="{ active: selectedPlatform === 'android' }"
+            @click="selectedPlatform = 'android'"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.523 15.341a.71.71 0 1 1 0-1.42.71.71 0 0 1 0 1.42m-11.046 0a.71.71 0 1 1 0-1.42.71.71 0 0 1 0 1.42m11.4-6.155 1.42-2.461a.296.296 0 0 0-.513-.296L17.34 8.91A8.94 8.94 0 0 0 12 7.6a8.94 8.94 0 0 0-5.34 1.31L5.215 6.43a.296.296 0 0 0-.513.296l1.42 2.461C3.683 10.668 1.94 13.27 1.65 16.4h20.7c-.29-3.131-2.033-5.733-4.473-7.214" />
+            </svg>
+            Android
+          </button>
+        </div>
+
+        <div class="cp-phone-stage">
+          <Transition name="cp-fade" mode="out-in">
             <PhoneFrame
+              v-if="selectedPlatform === 'ios'"
+              key="ios"
               src="/screenshots/ios-events.png"
               alt="Poliskollen Händelser på iPhone"
-              shadow-intensity="medium"
+              shadow-intensity="high"
             />
-            <a :href="APP_STORE_URL" target="_blank" rel="noopener" class="cp-store-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-              </svg>
-              App Store
-            </a>
-          </div>
-
-          <div class="cp-vs" aria-hidden="true">
-            <span>＋</span>
-          </div>
-
-          <div class="cp-card">
-            <div class="cp-badge cp-badge-android">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M17.523 15.341a.71.71 0 1 1 0-1.42.71.71 0 0 1 0 1.42m-11.046 0a.71.71 0 1 1 0-1.42.71.71 0 0 1 0 1.42m11.4-6.155 1.42-2.461a.296.296 0 0 0-.513-.296L17.34 8.91A8.94 8.94 0 0 0 12 7.6a8.94 8.94 0 0 0-5.34 1.31L5.215 6.43a.296.296 0 0 0-.513.296l1.42 2.461C3.683 10.668 1.94 13.27 1.65 16.4h20.7c-.29-3.131-2.033-5.733-4.473-7.214" />
-              </svg>
-              Android
-            </div>
             <PhoneFrame
+              v-else
+              key="android"
               src="/screenshots/android-events.png"
               alt="Poliskollen Händelser på Android"
-              shadow-intensity="medium"
+              shadow-intensity="high"
             />
-            <a href="https://play.google.com/store/apps/details?id=com.jeramo.poliskollen" target="_blank" rel="noopener" class="cp-store-btn cp-store-btn-android">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92m10.89 10.893 2.302 2.302-10.937 6.333zM21.176 12 17.792 9.939 14.499 13.5 17.79 16.06zm-12.812-7.59 10.937 6.333-2.302 2.302z"/>
-              </svg>
-              Google Play
-            </a>
-          </div>
+          </Transition>
+        </div>
+
+        <div class="cp-store-row">
+          <a :href="APP_STORE_URL" target="_blank" rel="noopener" class="cp-store-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+            </svg>
+            App Store
+          </a>
+          <a :href="PLAY_STORE_URL" target="_blank" rel="noopener" class="cp-store-btn cp-store-btn-android">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92m10.89 10.893 2.302 2.302-10.937 6.333zM21.176 12 17.792 9.939 14.499 13.5 17.79 16.06zm-12.812-7.59 10.937 6.333-2.302 2.302z"/>
+            </svg>
+            Google Play
+          </a>
         </div>
 
         <p class="cp-foot">
@@ -472,7 +498,7 @@ const reviews = [
 /* ============ CROSS-PLATFORM SECTION ============ */
 .cross-platform-section {
   position: relative;
-  padding: 100px 0;
+  padding: 88px 0;
   overflow: hidden;
 }
 
@@ -492,7 +518,9 @@ const reviews = [
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 56px;
+  gap: 32px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .cp-header {
@@ -501,7 +529,7 @@ const reviews = [
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .cp-eyebrow {
@@ -518,10 +546,10 @@ const reviews = [
 }
 
 .cp-title {
-  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-size: clamp(1.625rem, 4.5vw, 2.5rem);
   font-weight: 800;
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.15;
   background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.65) 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -529,54 +557,109 @@ const reviews = [
 }
 
 .cp-sub {
-  font-size: 1.0625rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.55);
   line-height: 1.6;
-  max-width: 520px;
+  max-width: 480px;
 }
 
-.cp-grid {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 36px;
-  align-items: center;
-  width: 100%;
-  max-width: 880px;
+/* --- Toggle (segmented control) --- */
+.cp-toggle {
+  position: relative;
+  display: inline-flex;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  isolation: isolate;
 }
 
-.cp-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+.cp-toggle::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1);
+  z-index: 0;
 }
 
-.cp-badge {
+.cp-toggle[data-active="android"]::before {
+  transform: translateX(100%);
+  background: linear-gradient(180deg, rgba(61, 199, 130, 0.22), rgba(61, 199, 130, 0.08));
+  border-color: rgba(61, 199, 130, 0.35);
+  box-shadow: 0 4px 14px rgba(61, 199, 130, 0.18);
+}
+
+.cp-toggle-btn {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  gap: 8px;
+  padding: 10px 22px;
+  min-width: 128px;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease;
 }
 
-.cp-badge svg {
-  width: 15px;
-  height: 15px;
+.cp-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
-.cp-badge-ios {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: rgba(255, 255, 255, 0.92);
+.cp-toggle-btn.active {
+  color: rgba(255, 255, 255, 0.98);
 }
 
-.cp-badge-android {
-  background: rgba(61, 199, 130, 0.10);
-  border: 1px solid rgba(61, 199, 130, 0.30);
-  color: #6EE5A8;
+.cp-toggle-btn:hover:not(.active) {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* --- Phone stage --- */
+.cp-phone-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 540px;
+  width: 100%;
+}
+
+.cp-fade-enter-active,
+.cp-fade-leave-active {
+  transition: opacity 0.28s ease, transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cp-fade-enter-from {
+  opacity: 0;
+  transform: translateY(8px) scale(0.985);
+}
+
+.cp-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.985);
+}
+
+/* --- Store buttons --- */
+.cp-store-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
 }
 
 .cp-store-btn {
@@ -605,21 +688,6 @@ const reviews = [
   border-color: rgba(61, 199, 130, 0.35);
 }
 
-.cp-vs {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 1.5rem;
-  font-weight: 300;
-  align-self: center;
-}
-
 .cp-foot {
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.45);
@@ -640,22 +708,34 @@ const reviews = [
 
 @media (max-width: 768px) {
   .cross-platform-section {
-    padding: 64px 0;
+    padding: 56px 0;
   }
 
   .cross-platform-container {
-    gap: 40px;
+    gap: 24px;
   }
 
-  .cp-grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
+  .cp-phone-stage {
+    min-height: 420px;
   }
 
-  .cp-vs {
-    transform: rotate(90deg);
-    width: 38px;
-    height: 38px;
+  .cp-toggle-btn {
+    min-width: 110px;
+    padding: 9px 18px;
+  }
+
+  .cp-store-btn {
+    flex: 1;
+    min-width: 140px;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cp-toggle::before,
+  .cp-fade-enter-active,
+  .cp-fade-leave-active {
+    transition: none;
   }
 }
 
