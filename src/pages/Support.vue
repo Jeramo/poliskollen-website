@@ -5,7 +5,7 @@ import { useFaqSchema } from '../composables/useFaqSchema.js'
 const supportFaqs = [
   { q: 'Hur aktiverar jag push-notiser?', a: 'Gå till Inställningar i appen och aktivera notiser för de områden du vill bevaka.' },
   { q: 'Är appen gratis?', a: 'Ja! Grundfunktionerna är helt gratis. Premium-prenumeration låser upp extra funktioner.' },
-  { q: 'Varifrån kommer informationen?', a: 'All information hämtas från Polisens officiella händelseflöde.' },
+  { q: 'Varifrån kommer informationen?', a: 'All information hämtas direkt från Polismyndighetens öppna API och publiceras ursprungligen på polisen.se/aktuellt/handelser/. Varje händelse i appen länkar tillbaka till sin originalrapport på polisen.se.' },
 ]
 
 useFaqSchema(supportFaqs, 'support-faq-schema')
@@ -181,12 +181,37 @@ const handleSubmit = async () => {
               <p class="contact-text">
                 Du kan också nå oss direkt via e-post:
               </p>
-              <a href="mailto:mvgqyvgn@formspree.io?subject=Poliskollen%20Support" class="contact-link">
+              <a href="mailto:support@poliskollen.nu?subject=Poliskollen%20Support" class="contact-link">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
                 support@poliskollen.nu
+              </a>
+            </div>
+
+            <!-- Source -->
+            <div class="support-card">
+              <div class="card-header compact">
+                <div class="card-icon-wrap small">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 3h7v7" />
+                    <path d="M10 14L21 3" />
+                    <path d="M21 14v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h7" />
+                  </svg>
+                </div>
+                <h3>Källa</h3>
+              </div>
+              <p class="contact-text">
+                All information i Poliskollen kommer ursprungligen från Polismyndigheten och publiceras på polisen.se. Varje händelse i appen länkar direkt till sin originalrapport.
+              </p>
+              <a href="https://polisen.se/aktuellt/handelser/" target="_blank" rel="noopener" class="contact-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+                polisen.se/aktuellt/handelser
               </a>
             </div>
           </div>

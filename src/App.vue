@@ -221,22 +221,32 @@ onUnmounted(() => {
           <div class="footer-brand">
             <img :src="appIcon" alt="Poliskollen" class="footer-logo" loading="lazy" />
             <p>Polishändelser i realtid</p>
+            <p class="footer-source">
+              Data från
+              <a href="https://polisen.se/aktuellt/handelser/" target="_blank" rel="noopener">polisen.se</a>.
+              Poliskollen är inte officiellt kopplad till Polismyndigheten.
+            </p>
           </div>
-          
+
           <div class="footer-links">
             <h4>Länkar</h4>
             <RouterLink to="/">Hem</RouterLink>
             <RouterLink to="/support">Support</RouterLink>
             <RouterLink to="/privacy">Integritetspolicy</RouterLink>
           </div>
-          
+
           <div class="footer-links">
             <h4>Ladda ner</h4>
             <a href="https://apps.apple.com/app/poliskollen" target="_blank" rel="noopener">App Store</a>
-            <span class="coming-soon">Android (kommer snart)</span>
+            <a href="https://play.google.com/store/apps/details?id=com.jeramo.poliskollen" target="_blank" rel="noopener">Google Play</a>
+          </div>
+
+          <div class="footer-links">
+            <h4>Kontakt</h4>
+            <a href="mailto:support@poliskollen.nu?subject=Poliskollen%20Support">support@poliskollen.nu</a>
           </div>
         </div>
-        
+
         <div class="footer-bottom">
           <p>&copy; {{ new Date().getFullYear() }} Poliskollen. Alla rättigheter förbehållna.</p>
         </div>
@@ -461,7 +471,7 @@ main {
 
 .footer-content {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: var(--space-2xl);
   margin-bottom: var(--space-2xl);
 }
@@ -546,10 +556,22 @@ main {
   width: 100%;
 }
 
-.coming-soon {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.9375rem;
-  font-style: italic;
+.footer-source {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  max-width: 320px;
+  margin-top: var(--space-xs);
+}
+
+.footer-source a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-source a:hover {
+  color: var(--text-light);
 }
 
 .footer-bottom {

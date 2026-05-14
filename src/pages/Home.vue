@@ -64,11 +64,15 @@ const faqs = [
   },
   {
     q: 'Varifrån kommer datan?',
-    a: 'All data hämtas från Polisens officiella API (polisen.se). Vi visar samma information som polisen publicerar, i realtid.',
+    a: 'All data hämtas från Polismyndighetens öppna API och publiceras ursprungligen på polisen.se/aktuellt/handelser/. Varje händelse i Poliskollen länkar direkt till sin originalrapport på polisen.se.',
   },
   {
     q: 'Finns appen på Android?',
-    a: 'Just nu finns Poliskollen bara på iPhone och Apple Watch. En Android-version är planerad men har inget datum ännu.',
+    a: 'Ja! Poliskollen är nu tillgänglig på Android via Google Play (stängd testning). Appen täcker samma kärnfunktioner som iOS-versionen: karta, händelselista, notiser och Wear OS-stöd.',
+  },
+  {
+    q: 'Hur kontaktar jag support?',
+    a: 'Maila support@poliskollen.nu eller använd kontaktformuläret på vår supportsida. Vi svarar vanligtvis inom 24 timmar.',
   },
 ]
 
