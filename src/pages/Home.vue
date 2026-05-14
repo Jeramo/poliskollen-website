@@ -159,7 +159,70 @@ const reviews = [
         </a>
 
         <p class="hero-enter" style="--delay: 6; margin-top: 1rem; font-size: 0.8125rem; color: rgba(255,255,255,0.3);">
-          Kräver iOS 17.0 · iPhone &amp; Apple Watch
+          Tillgänglig på iPhone, Apple Watch &amp; Android
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 1.5: CROSS-PLATFORM ============ -->
+    <section class="cinematic-section cross-platform-section" aria-labelledby="platforms-heading">
+      <div class="container cross-platform-container">
+        <div class="cp-header">
+          <span class="cp-eyebrow">Nyhet</span>
+          <h2 id="platforms-heading" class="cp-title">Samma upplevelse — iPhone &amp; Android</h2>
+          <p class="cp-sub">Pixelperfekt parity. Välj din plattform, vi möter dig där du är.</p>
+        </div>
+
+        <div class="cp-grid">
+          <div class="cp-card">
+            <div class="cp-badge cp-badge-ios">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+              </svg>
+              iOS
+            </div>
+            <PhoneFrame
+              src="/screenshots/ios-events.png"
+              alt="Poliskollen Händelser på iPhone"
+              shadow-intensity="medium"
+            />
+            <a :href="APP_STORE_URL" target="_blank" rel="noopener" class="cp-store-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+              </svg>
+              App Store
+            </a>
+          </div>
+
+          <div class="cp-vs" aria-hidden="true">
+            <span>＋</span>
+          </div>
+
+          <div class="cp-card">
+            <div class="cp-badge cp-badge-android">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.523 15.341a.71.71 0 1 1 0-1.42.71.71 0 0 1 0 1.42m-11.046 0a.71.71 0 1 1 0-1.42.71.71 0 0 1 0 1.42m11.4-6.155 1.42-2.461a.296.296 0 0 0-.513-.296L17.34 8.91A8.94 8.94 0 0 0 12 7.6a8.94 8.94 0 0 0-5.34 1.31L5.215 6.43a.296.296 0 0 0-.513.296l1.42 2.461C3.683 10.668 1.94 13.27 1.65 16.4h20.7c-.29-3.131-2.033-5.733-4.473-7.214" />
+              </svg>
+              Android
+            </div>
+            <PhoneFrame
+              src="/screenshots/android-events.png"
+              alt="Poliskollen Händelser på Android"
+              shadow-intensity="medium"
+            />
+            <a href="https://play.google.com/store/apps/details?id=com.jeramo.poliskollen" target="_blank" rel="noopener" class="cp-store-btn cp-store-btn-android">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92m10.89 10.893 2.302 2.302-10.937 6.333zM21.176 12 17.792 9.939 14.499 13.5 17.79 16.06zm-12.812-7.59 10.937 6.333-2.302 2.302z"/>
+              </svg>
+              Google Play
+            </a>
+          </div>
+        </div>
+
+        <p class="cp-foot">
+          All data hämtas från
+          <a href="https://polisen.se/aktuellt/handelser/" target="_blank" rel="noopener">polisen.se</a>.
+          Varje händelse länkar tillbaka till sin originalrapport.
         </p>
       </div>
     </section>
@@ -406,6 +469,196 @@ const reviews = [
 </template>
 
 <style scoped>
+/* ============ CROSS-PLATFORM SECTION ============ */
+.cross-platform-section {
+  position: relative;
+  padding: 100px 0;
+  overflow: hidden;
+}
+
+.cross-platform-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 800px 400px at 30% 40%, rgba(22, 90, 155, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 600px 300px at 70% 70%, rgba(61, 199, 130, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.cross-platform-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px;
+}
+
+.cp-header {
+  text-align: center;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.cp-eyebrow {
+  display: inline-block;
+  padding: 5px 14px;
+  background: linear-gradient(90deg, rgba(255, 159, 64, 0.18), rgba(255, 92, 0, 0.18));
+  border: 1px solid rgba(255, 159, 64, 0.35);
+  border-radius: 999px;
+  color: #FFB876;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cp-title {
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.65) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cp-sub {
+  font-size: 1.0625rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+  max-width: 520px;
+}
+
+.cp-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 36px;
+  align-items: center;
+  width: 100%;
+  max-width: 880px;
+}
+
+.cp-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.cp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.cp-badge svg {
+  width: 15px;
+  height: 15px;
+}
+
+.cp-badge-ios {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.cp-badge-android {
+  background: rgba(61, 199, 130, 0.10);
+  border: 1px solid rgba(61, 199, 130, 0.30);
+  color: #6EE5A8;
+}
+
+.cp-store-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, border-color 0.25s ease;
+}
+
+.cp-store-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 1);
+}
+
+.cp-store-btn-android:hover {
+  background: rgba(61, 199, 130, 0.12);
+  border-color: rgba(61, 199, 130, 0.35);
+}
+
+.cp-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.5rem;
+  font-weight: 300;
+  align-self: center;
+}
+
+.cp-foot {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.45);
+  text-align: center;
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+.cp-foot a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cp-foot a:hover {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+@media (max-width: 768px) {
+  .cross-platform-section {
+    padding: 64px 0;
+  }
+
+  .cross-platform-container {
+    gap: 40px;
+  }
+
+  .cp-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .cp-vs {
+    transform: rotate(90deg);
+    width: 38px;
+    height: 38px;
+  }
+}
+
 /* Hero section specifics */
 .hero-section {
   min-height: 100vh;
