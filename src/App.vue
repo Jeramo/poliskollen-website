@@ -2,7 +2,12 @@
 import { RouterView, RouterLink, useRoute } from 'vue-router'
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useScrollDirection } from './composables/useScrollDirection.js'
+import { usePlatform } from './composables/usePlatform.js'
 const appIcon = '/assets/app-icon.png'
+
+// Tailor the single-store CTA to the visitor's device; rows showing both stores
+// use the raw URLs.
+const { primaryStoreUrl, APP_STORE_URL, PLAY_STORE_URL } = usePlatform()
 
 // Scroll to top button visibility
 const showScrollTop = ref(false)
@@ -184,7 +189,7 @@ onUnmounted(() => {
             </svg>
             <span>{{ isDark ? 'Ljust lage' : 'Morkt lage' }}</span>
           </button>
-          <a href="https://apps.apple.com/app/poliskollen" target="_blank" rel="noopener" class="mobile-cta">
+          <a :href="primaryStoreUrl" target="_blank" rel="noopener" class="mobile-cta">
             Ladda ner appen
           </a>
         </div>
@@ -237,8 +242,8 @@ onUnmounted(() => {
 
           <div class="footer-links">
             <h4>Ladda ner</h4>
-            <a href="https://apps.apple.com/app/poliskollen" target="_blank" rel="noopener">App Store</a>
-            <span class="coming-soon">Google Play (kommer snart)</span>
+            <a :href="APP_STORE_URL" target="_blank" rel="noopener">App Store</a>
+            <a :href="PLAY_STORE_URL" target="_blank" rel="noopener">Google Play</a>
           </div>
 
           <div class="footer-links">
@@ -572,12 +577,6 @@ main {
 
 .footer-source a:hover {
   color: var(--text-light);
-}
-
-.coming-soon {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.9375rem;
-  font-style: italic;
 }
 
 .footer-bottom {

@@ -4,14 +4,14 @@ import { useFaqSchema } from '../composables/useFaqSchema.js'
 import { useAnimatedCounter } from '../composables/useAnimatedCounter.js'
 import { useSectionReveal } from '../composables/useSectionReveal.js'
 import { useParallax } from '../composables/useParallax.js'
+import { usePlatform } from '../composables/usePlatform.js'
 import PhoneFrame from '../components/PhoneFrame.vue'
 
 const appIcon = '/assets/app-icon.png'
-const APP_STORE_URL = 'https://apps.apple.com/app/id6757537288'
-const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.jeramo.poliskollen'
 
-// ---- Platform toggle ----
-const selectedPlatform = ref('ios')
+// ---- Device detection → tailor the download CTAs + comparison toggle ----
+const { isAndroid: primaryStoreIsAndroid, primaryStoreUrl, APP_STORE_URL, PLAY_STORE_URL } = usePlatform()
+const selectedPlatform = ref(primaryStoreIsAndroid ? 'android' : 'ios')
 
 // ---- Animated counters ----
 const { display: ratingDisplay, elRef: ratingRef } = useAnimatedCounter(4.3, { duration: 2000, decimals: 1, suffix: ' ★' })
@@ -168,8 +168,11 @@ const reviews = [
           </div>
         </div>
 
-        <a :href="APP_STORE_URL" target="_blank" rel="noopener" class="cta-btn hero-enter" style="--delay: 6; margin-top: 1.5rem;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <a :href="primaryStoreUrl" target="_blank" rel="noopener" class="cta-btn hero-enter" style="--delay: 6; margin-top: 1.5rem;">
+          <svg v-if="primaryStoreIsAndroid" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92m10.89 10.893 2.302 2.302-10.937 6.333zM21.176 12 17.792 9.939 14.499 13.5 17.79 16.06zm-12.812-7.59 10.937 6.333-2.302 2.302z"/>
+          </svg>
+          <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
           </svg>
           Ladda ner gratis
@@ -280,7 +283,7 @@ const reviews = [
         <div class="feature-text">
           <span class="section-label">Karta</span>
           <h2 id="map-heading">Se allt. Överallt.</h2>
-          <p class="section-copy">Värmekarta och interaktiv karta över hela Sverige. Se var händelser inträffar — i realtid.</p>
+          <p class="section-copy">Värmekarta och interaktiv karta över hela Sverige. Se var saker händer, så fort de händer.</p>
         </div>
         <div class="feature-phone" style="position: relative;">
           <PhoneFrame
@@ -420,7 +423,7 @@ const reviews = [
                 {{ feat }}
               </li>
             </ul>
-            <a :href="APP_STORE_URL" target="_blank" rel="noopener" class="pricing-cta pricing-cta-secondary">Kom igång gratis</a>
+            <a :href="primaryStoreUrl" target="_blank" rel="noopener" class="pricing-cta pricing-cta-secondary">Kom igång gratis</a>
           </div>
 
           <!-- Pro -->
@@ -437,7 +440,7 @@ const reviews = [
                 {{ feat }}
               </li>
             </ul>
-            <a :href="APP_STORE_URL" target="_blank" rel="noopener" class="pricing-cta pricing-cta-primary">Uppgradera till Pro</a>
+            <a :href="primaryStoreUrl" target="_blank" rel="noopener" class="pricing-cta pricing-cta-primary">Uppgradera till Pro</a>
           </div>
         </div>
       </div>
