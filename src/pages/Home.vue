@@ -20,7 +20,6 @@ const { display: reviewCountDisplay, elRef: reviewCountRef } = useAnimatedCounte
 // ---- Section refs for reveal ----
 const storyRef1 = ref(null)
 const storyRef2 = ref(null)
-const storyRef3 = ref(null)
 const mapRef = ref(null)
 const aiRef = ref(null)
 const trendsRef = ref(null)
@@ -37,7 +36,6 @@ useParallax(heroPhoneRef, 0.8)
 // Section reveals
 useSectionReveal(storyRef1, { type: 'fade-up', threshold: 0.15 })
 useSectionReveal(storyRef2, { type: 'fade-up', threshold: 0.35 })
-useSectionReveal(storyRef3, { type: 'fade-up', threshold: 0.55 })
 useSectionReveal(mapRef, { type: 'fade-up' })
 useSectionReveal(aiRef, { type: 'fade-up' })
 useSectionReveal(trendsRef, { type: 'fade-up' })
@@ -269,11 +267,10 @@ const reviews = [
     </section>
 
     <!-- ============ SECTION 2: STORY ============ -->
-    <section class="cinematic-section" aria-label="Varför Poliskollen">
-      <div class="container" style="text-align: center; display: flex; flex-direction: column; gap: 2rem; align-items: center;">
+    <section class="cinematic-section story-section" aria-label="Varför Poliskollen">
+      <div class="container" style="text-align: center; display: flex; flex-direction: column; gap: 1rem; align-items: center;">
         <div ref="storyRef1" class="story-line">Sverige vaknar.</div>
         <div ref="storyRef2" class="story-line">Vad hände i natt?</div>
-        <div ref="storyRef3" class="story-line-muted">Poliskollen ger dig svaret — <span class="story-line-accent">direkt.</span></div>
       </div>
     </section>
 
@@ -827,5 +824,12 @@ const reviews = [
   .hero-video__media {
     display: none;
   }
+}
+
+/* Story section: tighter than the default full-screen cinematic-section so the
+   short lines don't float in a sea of empty space. */
+.story-section {
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
 }
 </style>
