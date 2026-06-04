@@ -54,7 +54,7 @@ const toggleFaq = (i) => {
 const faqs = [
   {
     q: 'Är Poliskollen gratis?',
-    a: 'Ja! Grundversionen är helt gratis med alla kärnfunktioner — karta, push-notiser, Apple Watch och widgets. Pro lägger till AI-assistenten och mer.',
+    a: 'Ja! Grundversionen är helt gratis med alla kärnfunktioner: karta, push-notiser, Apple Watch och widgets. Pro lägger till AI-assistenten och mer.',
   },
   {
     q: 'Vad ingår i Poliskollen Pro?',
@@ -136,14 +136,7 @@ const reviews = [
       </div>
 
       <div class="container" style="text-align: center; position: relative; z-index: 1;">
-        <img
-          :src="appIcon"
-          alt="Poliskollen"
-          class="hero-enter"
-          style="--delay: 1; width: 80px; height: 80px; border-radius: 20px;"
-        />
-
-        <h1 class="hero-enter" style="--delay: 2; margin-top: 1.5rem;">
+        <h1 class="hero-enter" style="--delay: 2;">
           Håll koll på<br />vad polisen gör.
         </h1>
 
@@ -188,8 +181,7 @@ const reviews = [
     <section class="cinematic-section cross-platform-section" aria-labelledby="platforms-heading">
       <div class="container cross-platform-container">
         <div class="cp-header">
-          <span class="cp-eyebrow">Nyhet</span>
-          <h2 id="platforms-heading" class="cp-title">Samma upplevelse — iPhone &amp; Android</h2>
+          <h2 id="platforms-heading" class="cp-title">Samma upplevelse på iPhone &amp; Android</h2>
           <p class="cp-sub">Pixelperfekt parity. Välj din plattform.</p>
         </div>
 
@@ -349,7 +341,7 @@ const reviews = [
       <div ref="quizRef" class="container" style="text-align: center;">
         <span class="section-label">Underhållning</span>
         <h2 id="quiz-heading">Testa dig själv.</h2>
-        <p class="section-copy" style="margin: 1rem auto 2.5rem;">Gissa händelsen — läs en sammanfattning och gissa vilken typ av brott det är. Bygg upp din streak och tävla med dig själv.</p>
+        <p class="section-copy" style="margin: 1rem auto 2.5rem;">Gissa händelsen. Läs en sammanfattning och gissa vilken typ av brott det är. Bygg upp din streak och tävla med dig själv.</p>
         <div class="phone-float">
           <PhoneFrame
             src="/screenshots/4-quiz.jpg"
@@ -391,12 +383,12 @@ const reviews = [
         <div class="stars" style="margin-top: 1.5rem;">
           <span>★</span><span>★</span><span>★</span><span>★</span><span style="opacity: 0.3;">★</span>
         </div>
-        <p ref="reviewCountRef" style="margin-top: 0.5rem; font-size: 1.25rem; color: rgba(255,255,255,0.7);">4.3 av 5 — {{ reviewCountDisplay }} recensioner på App Store</p>
+        <p ref="reviewCountRef" style="margin-top: 0.5rem; font-size: 1.25rem; color: rgba(255,255,255,0.7);">4.3 av 5 från {{ reviewCountDisplay }} recensioner på App Store</p>
 
         <div ref="socialProofRef" class="review-cards" style="margin-top: 2.5rem;">
           <div v-for="(review, i) in reviews" :key="i" class="review-card">
             <p>"{{ review.text }}"</p>
-            <div class="reviewer">— {{ review.author }}</div>
+            <div class="reviewer">{{ review.author }}</div>
           </div>
         </div>
       </div>
@@ -407,7 +399,7 @@ const reviews = [
       <div ref="pricingRef" class="container" style="text-align: center;">
         <span class="section-label">Priser</span>
         <h2 id="pricing-heading">Välj din plan.</h2>
-        <p class="section-copy" style="margin: 1rem auto 2.5rem;">Börja gratis — uppgradera när du är redo.</p>
+        <p class="section-copy" style="margin: 1rem auto 2.5rem;">Börja gratis, uppgradera när du är redo.</p>
 
         <div class="pricing-grid">
           <!-- Free -->
@@ -551,19 +543,6 @@ const reviews = [
   flex-direction: column;
   align-items: center;
   gap: 12px;
-}
-
-.cp-eyebrow {
-  display: inline-block;
-  padding: 5px 14px;
-  background: linear-gradient(90deg, rgba(255, 159, 64, 0.18), rgba(255, 92, 0, 0.18));
-  border: 1px solid rgba(255, 159, 64, 0.35);
-  border-radius: 999px;
-  color: #FFB876;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
 }
 
 .cp-title {
