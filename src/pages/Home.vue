@@ -63,8 +63,8 @@ const faqs = [
     a: 'Pro kostar 9 kr/månad och ger dig AI-assistenten som sammanfattar händelser, quiz-läge, avancerad statistik och prioriterade notiser.',
   },
   {
-    q: 'Fungerar appen på Apple Watch?',
-    a: 'Ja, Poliskollen har en fullständig Apple Watch-app. Se senaste händelserna direkt på handleden och få notiser.',
+    q: 'Fungerar appen på klockan?',
+    a: 'Ja. Det finns en app till både Apple Watch och Wear OS. Se de senaste händelserna direkt på handleden och få notiser.',
   },
   {
     q: 'Varifrån kommer datan?',
@@ -72,7 +72,7 @@ const faqs = [
   },
   {
     q: 'Finns appen på Android?',
-    a: 'Ja! Poliskollen är nu tillgänglig på Android via Google Play (stängd testning). Appen täcker samma kärnfunktioner som iOS-versionen: karta, händelselista, notiser och Wear OS-stöd.',
+    a: 'Ja, Poliskollen finns på Google Play. Du får samma sak som på iPhone: karta, händelselista och notiser. Det finns även en app till Wear OS-klockor.',
   },
   {
     q: 'Hur kontaktar jag support?',
@@ -118,6 +118,25 @@ const reviews = [
         <div class="hero-orb hero-orb-3"></div>
       </div>
 
+      <!-- Hero background video. Muted + playsinline + autoplay = the combo that
+           actually autoplays on iOS/Android. Poster shows instantly and is the
+           fallback for prefers-reduced-motion / slow connections. -->
+      <div class="hero-video" aria-hidden="true">
+        <video
+          class="hero-video__media"
+          autoplay
+          loop
+          muted
+          playsinline
+          preload="auto"
+          poster="/hero/hero-poster.jpg"
+        >
+          <source src="/hero/hero.webm" type="video/webm" />
+          <source src="/hero/hero.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-video__scrim"></div>
+      </div>
+
       <div class="container" style="text-align: center; position: relative; z-index: 1;">
         <img
           :src="appIcon"
@@ -127,12 +146,8 @@ const reviews = [
         />
 
         <h1 class="hero-enter" style="--delay: 2; margin-top: 1.5rem;">
-          Hela Sveriges<br />polishändelser.
+          Håll koll på<br />vad polisen gör.
         </h1>
-
-        <p class="hero-enter" style="--delay: 3; margin-top: 1rem; font-size: clamp(1.125rem, 2vw, 1.5rem); color: rgba(255,255,255,0.5);">
-          I din ficka. I realtid.
-        </p>
 
         <div ref="heroPhoneRef" class="hero-enter" style="--delay: 4; margin-top: 2rem;">
           <PhoneFrame
@@ -163,7 +178,7 @@ const reviews = [
         </a>
 
         <p class="hero-enter" style="--delay: 6; margin-top: 1rem; font-size: 0.8125rem; color: rgba(255,255,255,0.3);">
-          Tillgänglig på iPhone, Apple Watch &amp; Android
+          Tillgänglig på iPhone, Android, Apple Watch &amp; Wear OS
         </p>
       </div>
     </section>
@@ -237,13 +252,12 @@ const reviews = [
             </svg>
             App Store
           </a>
-          <span class="cp-store-btn cp-store-btn-android cp-store-btn-soon" aria-disabled="true">
+          <a :href="PLAY_STORE_URL" target="_blank" rel="noopener" class="cp-store-btn cp-store-btn-android">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92m10.89 10.893 2.302 2.302-10.937 6.333zM21.176 12 17.792 9.939 14.499 13.5 17.79 16.06zm-12.812-7.59 10.937 6.333-2.302 2.302z"/>
             </svg>
             Google Play
-            <em class="cp-soon-tag">Kommer snart</em>
-          </span>
+          </a>
         </div>
 
         <p class="cp-foot">
@@ -437,7 +451,7 @@ const reviews = [
       <div ref="ctaRef" class="container" style="text-align: center;">
         <h2 id="final-cta-heading">Redo att hålla koll?</h2>
         <p style="margin-top: 1rem; font-size: 1.125rem; color: rgba(255,255,255,0.5);">
-          Ladda ner Poliskollen gratis. Tillgänglig på iPhone och Apple Watch.
+          Ladda ner Poliskollen gratis. Finns på iPhone, Android, Apple Watch och Wear OS.
         </p>
         <img
           :src="appIcon"
@@ -446,12 +460,18 @@ const reviews = [
           style="width: 72px; height: 72px; border-radius: 18px; margin-top: 2rem;"
           loading="lazy"
         />
-        <div style="margin-top: 1.5rem;">
+        <div style="margin-top: 1.5rem; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
           <a :href="APP_STORE_URL" target="_blank" rel="noopener" class="cta-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
             </svg>
-            Ladda ner på App Store
+            App Store
+          </a>
+          <a :href="PLAY_STORE_URL" target="_blank" rel="noopener" class="cta-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92m10.89 10.893 2.302 2.302-10.937 6.333zM21.176 12 17.792 9.939 14.499 13.5 17.79 16.06zm-12.812-7.59 10.937 6.333-2.302 2.302z"/>
+            </svg>
+            Google Play
           </a>
         </div>
       </div>
@@ -689,26 +709,6 @@ const reviews = [
   border-color: rgba(61, 199, 130, 0.35);
 }
 
-.cp-store-btn-soon {
-  opacity: 0.7;
-  cursor: default;
-  pointer-events: none;
-}
-
-.cp-soon-tag {
-  margin-left: 6px;
-  padding: 2px 8px;
-  background: rgba(255, 159, 64, 0.18);
-  border: 1px solid rgba(255, 159, 64, 0.30);
-  border-radius: 999px;
-  color: #FFB876;
-  font-size: 0.6875rem;
-  font-style: normal;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
 .cp-foot {
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.45);
@@ -786,5 +786,46 @@ const reviews = [
   background: radial-gradient(ellipse, rgba(22, 90, 155, 0.15) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
+}
+
+/* ============ HERO BACKGROUND VIDEO ============ */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  /* Poster doubles as the still backdrop before the video paints, on load
+     failure, and under prefers-reduced-motion. */
+  background: #0a0a0f url('/hero/hero-poster.jpg') center / cover no-repeat;
+}
+
+.hero-video__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dark scrim: keeps the white hero text legible and melts into the page
+   background (#0a0a0f) at the bottom so the section transition stays seamless. */
+.hero-video__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 15, 0.80) 0%,
+    rgba(10, 10, 15, 0.58) 35%,
+    rgba(10, 10, 15, 0.68) 72%,
+    rgba(10, 10, 15, 0.96) 100%
+  );
+}
+
+/* Respect reduced-motion (and, in practice, data-saver users): drop the moving
+   video and leave the static poster + scrim. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video__media {
+    display: none;
+  }
 }
 </style>
