@@ -1,76 +1,45 @@
-<!DOCTYPE html>
-<html lang="sv">
+<!doctype html>
+<html lang="sv" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Poliskollen - Polishändelser i realtid</title>
-    <meta name="description" content="Få polishändelser direkt i fickan. Poliskollen visar dig händelser nära dig i realtid på en interaktiv karta med push-notiser och Apple Watch-stöd." />
-    <meta name="keywords" content="polishändelser, polisen, brott, karta, realtid, push-notiser, Apple Watch, Sverige, nyheter, säkerhet" />
-    <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#165A9B" />
-    <meta name="apple-itunes-app" content="app-id=6757537288" />
-
-    <!-- Open Graph / Social -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0B0D10" />
+    <meta name="description" content="Poliskollen — polishändelser i hela Sverige i realtid, direkt på kartan." />
+    <title>Poliskollen — Polishändelser i realtid</title>
+    <link rel="icon" type="image/png" href="/poliskollen-icon.png" />
+    <link rel="apple-touch-icon" href="/poliskollen-icon.png" />
+    <meta property="og:title" content="Poliskollen — Polishändelser i realtid" />
+    <meta property="og:description" content="Följ polisens händelser i hela Sverige, live på kartan." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://poliskollen.nu" />
-    <meta property="og:title" content="Poliskollen - Polishändelser i realtid" />
-    <meta property="og:description" content="Hela Sveriges polishändelser i din ficka. Push-notiser, interaktiv karta, Apple Watch och widgets." />
-    <meta property="og:image" content="https://poliskollen.nu/assets/app-icon.png" />
-    <meta property="og:locale" content="sv_SE" />
-    <meta property="og:site_name" content="Poliskollen" />
+    <meta property="og:url" content="https://poliskollen.nu/" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Poliskollen - Polishändelser i realtid" />
-    <meta name="twitter:description" content="Hela Sveriges polishändelser i din ficka. Push-notiser, interaktiv karta, Apple Watch och widgets." />
-    <meta name="twitter:image" content="https://poliskollen.nu/assets/app-icon.png" />
-    
-    <link rel="icon" type="image/png" href="/assets/app-icon.png" />
-    <link rel="canonical" href="https://poliskollen.nu" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link href="https://cdn.jsdelivr.net/npm/geist@1.2.0/dist/fonts/geist-sans/style.min.css" rel="stylesheet" />
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Poliskollen",
-      "operatingSystem": "iOS",
-      "applicationCategory": "NewsApplication",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "SEK"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.3",
-        "ratingCount": "6"
-      },
-      "description": "Polishändelser i realtid på en interaktiv karta. Push-notiser, Apple Watch-app och widgets.",
-      "url": "https://apps.apple.com/app/id6757537288",
-      "screenshot": "https://poliskollen.nu/screenshots/screenshot-1.png",
-      "author": {
-        "@type": "Organization",
-        "name": "Poliskollen",
-        "url": "https://poliskollen.nu"
-      }
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Poliskollen",
-      "url": "https://poliskollen.nu",
-      "description": "Polishändelser i realtid på en interaktiv karta med push-notiser och Apple Watch-stöd.",
-      "inLanguage": "sv"
-    }
-    </script>
-    
-    <script type="module" src="/src/main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Hoppa till innehåll</a>
-    <div id="app"></div>
+    <div id="map"></div>
+
+    <!-- Top-left wordmark + live indicator -->
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Poliskollen">
+        <img class="brand-mark" src="/poliskollen-icon.png" width="30" height="30" alt="" />
+        <img class="brand-wordmark" src="/poliskollen-wordmark.png" alt="Poliskollen" />
+      </a>
+      <div class="live" title="Live från Polisens öppna data">
+        <span class="live-dot"></span><b id="live-count">–</b> händelser
+      </div>
+    </header>
+
+    <!-- Floating type filters -->
+    <div class="filterbar" id="filters" aria-label="Filtrera händelsetyper"></div>
+
+    <!-- Legend + disclaimer -->
+    <div class="legend" id="legend"></div>
+    <div class="attrib">Ej officiellt kopplad till Polismyndigheten · Polisens öppna data</div>
+
+    <div class="map-loading" id="map-loading"><span class="spinner"></span> Laddar händelser…</div>
+
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
