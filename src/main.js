@@ -353,6 +353,63 @@ function initLocateButton() {
   })
 }
 
+// Place search via Photon (free, no key), biased to Sweden.
+async function photonSearch(q) {
+  try {
+    const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=6&bbox=10,55,25,70`)
+    if (!res.ok) return []
+    const data = await res.json()
+    return (data.features || []).map((f) => {
+      const p = f.properties || {}
+      const [lng, lat] = f.geometry.coordinates
+      const label = [...new Set([p.name || p.street, p.city || p.county, p.state].filter(Boolean))].slice(0, 3).join(', ')
+      return { lng, lat, label: label || 'Okänd plats' }
+    })
+  } catch { return [] }
+}
+
+function initSearch() {
+  const input = document.getElementById('search-input')
+  const clearBtn = document.getElementById('search-clear')
+  const box = document.getElementById('search-results')
+  const search = document.querySelector('.search')
+  let results = []
+  let timer = null
+  const close = () => { box.hidden = true; box.innerHTML = '' }
+  const pick = (r) => {
+    if (!r) return
+    map.flyTo({ center: [r.lng, r.lat], zoom: 13, duration: 1600, essential: true })
+    input.value = r.label; clearBtn.hidden = false; close(); input.blur()
+  }
+  const render = (list) => {
+    results = list
+    if (!list.length) { box.innerHTML = '<div class="search-empty">Inga träffar</div>'; box.hidden = false; return }
+    box.innerHTML = list.map((r, i) => `
+      <div class="search-result" data-i="${i}">
+        <svg class="rpin" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+        <span class="rlabel">${esc(r.label)}</span>
+      </div>`).join('')
+    box.hidden = false
+    box.querySelectorAll('.search-result').forEach((el) => el.addEventListener('click', () => pick(results[+el.dataset.i])))
+  }
+  input.addEventListener('input', () => {
+    const q = input.value.trim()
+    clearBtn.hidden = q.length === 0
+    clearTimeout(timer)
+    if (q.length < 2) { close(); return }
+    timer = setTimeout(async () => {
+      const list = await photonSearch(q)
+      if (input.value.trim() === q) render(list)
+    }, 300)
+  })
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && results.length) pick(results[0])
+    if (e.key === 'Escape') { close(); input.blur() }
+  })
+  clearBtn.addEventListener('click', () => { input.value = ''; clearBtn.hidden = true; close(); input.focus() })
+  document.addEventListener('click', (e) => { if (!search.contains(e.target)) close() })
+}
+
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
 }
@@ -361,6 +418,7 @@ function esc(s) {
 async function boot() {
   initMap()
   initDownloadModal()
+  initSearch()
   initFilterUI()
   initLocateButton()
   gsap.from('.brand', { opacity: 0, x: -12, duration: 0.6, ease: 'power2.out' })

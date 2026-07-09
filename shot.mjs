@@ -21,23 +21,16 @@ async function page() {
 
 { const p = await page(); await p.screenshot({ path: `${OUT}/overview.png` }); console.log('shot overview'); await p.close() }
 
-{ const p = await page(); await p.click('#filter-btn'); await wait(500); await p.screenshot({ path: `${OUT}/filter-open.png` }); console.log('shot filter-open'); await p.close() }
-
 {
   const p = await page()
-  await p.evaluate(() => window.__map.jumpTo({ center: [18.05, 59.33], zoom: 10.5 }))
-  await wait(1500)
-  const pt = await p.evaluate(() => {
-    const m = window.__map
-    const f = m.queryRenderedFeatures({ layers: ['evt-pin'] })[0]
-    if (!f) return null
-    const q = m.project(f.geometry.coordinates)
-    return { x: Math.round(q.x), y: Math.round(q.y) }
-  })
-  if (pt) { await p.mouse.click(pt.x, pt.y); await wait(1400) }
-  await p.screenshot({ path: `${OUT}/popup.png` })
-  console.log('shot popup', pt)
+  await p.click('#search-input')
+  await p.type('#search-input', 'Göteborg', { delay: 40 })
+  await wait(1600) // debounce + Photon fetch
+  await p.screenshot({ path: `${OUT}/search.png` })
+  console.log('shot search')
   await p.close()
 }
+
+{ const p = await page(); await p.setViewport({ width: 390, height: 844 }); await p.reload({ waitUntil: 'networkidle2' }); await wait(4000); await p.screenshot({ path: `${OUT}/mob.png` }); console.log('shot mob'); await p.close() }
 
 await browser.close()
