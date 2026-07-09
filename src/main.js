@@ -212,7 +212,7 @@ function initMap() {
       const p = e.features[0].properties
       focusPin(e.features[0].geometry.coordinates, `
         <div class="pop">
-          <span class="pop-type" style="color:${p.color}"><span class="dot" style="background:${p.color}"></span>${esc(p.type)}</span>
+          <span class="pop-type" style="color:${p.color}">${esc(p.type)}</span>
           <h4>${esc(p.name)}</h4>
           ${p.summary ? `<p>${esc(p.summary)}</p>` : ''}
           <div class="meta">${esc([p.place, p.region].filter(Boolean).join(', '))} · ${esc(p.time)}</div>
@@ -222,7 +222,7 @@ function initMap() {
       const p = e.features[0].properties
       focusPin(e.features[0].geometry.coordinates, `
         <div class="pop">
-          <span class="pop-type" style="color:#5b9eff"><span class="dot" style="background:#5b9eff"></span>Community-rapport</span>
+          <span class="pop-type" style="color:#5b9eff">Community-rapport</span>
           <h4>${esc(p.category)}</h4>
           <div class="meta">${p.confirm} bekräftelser · anonym</div>
         </div>`)
@@ -279,6 +279,7 @@ function applyFilter() {
   const geo = eventsGeoJSON(list)
   ensurePinImages(geo.features)
   src.setData(geo)
+  updateFilterBadge()
 }
 
 // ---------- Download modal ----------
@@ -309,7 +310,47 @@ function renderFilters() {
     }
     el.appendChild(chip)
   })
-  gsap.from('.filterbar', { opacity: 0, y: -8, duration: 0.5, ease: 'power2.out' })
+}
+
+function updateFilterBadge() {
+  const btn = document.getElementById('filter-btn')
+  const badge = document.getElementById('filter-badge')
+  const n = active.size
+  btn.classList.toggle('on', n > 0)
+  badge.textContent = String(n)
+  badge.hidden = n === 0
+}
+
+function initFilterUI() {
+  const btn = document.getElementById('filter-btn')
+  const panel = document.getElementById('filter-panel')
+  const wrap = document.querySelector('.filter-wrap')
+  const setOpen = (open) => { panel.hidden = !open; btn.setAttribute('aria-expanded', String(open)) }
+  btn.addEventListener('click', (e) => { e.stopPropagation(); setOpen(panel.hidden) })
+  document.getElementById('filter-clear').addEventListener('click', () => {
+    active.clear()
+    document.querySelectorAll('#filters .chip.active').forEach((c) => c.classList.remove('active'))
+    applyFilter()
+  })
+  document.addEventListener('click', (e) => { if (!panel.hidden && !wrap.contains(e.target)) setOpen(false) })
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) setOpen(false) })
+}
+
+// "Till min position" — fly to the user's live location.
+function initLocateButton() {
+  const btn = document.getElementById('locate-btn')
+  btn.addEventListener('click', () => {
+    if (!('geolocation' in navigator) || btn.classList.contains('locating')) return
+    btn.classList.add('locating')
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        btn.classList.remove('locating')
+        map.flyTo({ center: [pos.coords.longitude, pos.coords.latitude], zoom: 12, duration: 1500, essential: true })
+      },
+      () => btn.classList.remove('locating'),
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 },
+    )
+  })
 }
 
 function esc(s) {
@@ -320,6 +361,8 @@ function esc(s) {
 async function boot() {
   initMap()
   initDownloadModal()
+  initFilterUI()
+  initLocateButton()
   gsap.from('.brand', { opacity: 0, x: -12, duration: 0.6, ease: 'power2.out' })
   // Events are the page — load and show them immediately.
   try {

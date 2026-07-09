@@ -19,20 +19,13 @@ async function page() {
   return p
 }
 
-// Improved pin frames — zoom in so the gloss/ring is visible.
+{ const p = await page(); await p.screenshot({ path: `${OUT}/overview.png` }); console.log('shot overview'); await p.close() }
+
+{ const p = await page(); await p.click('#filter-btn'); await wait(500); await p.screenshot({ path: `${OUT}/filter-open.png` }); console.log('shot filter-open'); await p.close() }
+
 {
   const p = await page()
   await p.evaluate(() => window.__map.jumpTo({ center: [18.05, 59.33], zoom: 10.5 }))
-  await wait(1500)
-  await p.screenshot({ path: `${OUT}/pins.png` })
-  console.log('shot pins')
-  await p.close()
-}
-
-// Pin press → focus animation + pulse + popup.
-{
-  const p = await page()
-  await p.evaluate(() => window.__map.jumpTo({ center: [18.05, 59.33], zoom: 10 }))
   await wait(1500)
   const pt = await p.evaluate(() => {
     const m = window.__map
@@ -42,8 +35,8 @@ async function page() {
     return { x: Math.round(q.x), y: Math.round(q.y) }
   })
   if (pt) { await p.mouse.click(pt.x, pt.y); await wait(1400) }
-  await p.screenshot({ path: `${OUT}/press.png` })
-  console.log('shot press', pt)
+  await p.screenshot({ path: `${OUT}/popup.png` })
+  console.log('shot popup', pt)
   await p.close()
 }
 

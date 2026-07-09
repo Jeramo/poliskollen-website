@@ -59,8 +59,26 @@
       </div>
     </div>
 
-    <!-- Floating type filters -->
-    <div class="filterbar" id="filters" aria-label="Filtrera händelsetyper"></div>
+    <!-- Filter (condensed into one button + panel) -->
+    <div class="filter-wrap">
+      <button class="filter-btn" id="filter-btn" type="button" aria-expanded="false" aria-controls="filter-panel">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 5h18v2.1l-7 6.5V21l-4-2v-5.4L3 7.1V5Z"/></svg>
+        <span>Filter</span>
+        <span class="filter-badge" id="filter-badge" hidden>0</span>
+      </button>
+      <div class="filter-panel" id="filter-panel" hidden>
+        <div class="filter-panel-head">
+          <b>Händelsetyper</b>
+          <button class="filter-clear" id="filter-clear" type="button">Rensa</button>
+        </div>
+        <div class="filter-list" id="filters" aria-label="Filtrera händelsetyper"></div>
+      </div>
+    </div>
+
+    <!-- Locate me (bottom-left) -->
+    <button class="locate-btn" id="locate-btn" type="button" aria-label="Till min position">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M13 2h-2v2.06A8 8 0 0 0 4.06 11H2v2h2.06A8 8 0 0 0 11 19.94V22h2v-2.06A8 8 0 0 0 19.94 13H22v-2h-2.06A8 8 0 0 0 13 4.06V2Zm-1 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12Zm0 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>
+    </button>
 
     <div class="attrib">Ej officiellt kopplad till Polismyndigheten · Polisens öppna data</div>
 

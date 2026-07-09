@@ -89,21 +89,37 @@ a { color: inherit; text-decoration: none; }
 .store-txt b { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
 @media (prefers-reduced-motion: reduce) { .dl-glint, .modal-icon { animation: none; } }
 
-/* ---------- Filter bar ---------- */
-.filterbar {
-  position: fixed; z-index: 10; top: 60px; left: 0; right: 0;
-  display: flex; gap: 8px; padding: 6px clamp(14px, 3vw, 22px) 6px;
-  overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
-  mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
-}
-.filterbar::-webkit-scrollbar { display: none; }
-.chip { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500;
-  padding: 8px 14px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); color: var(--text-dim);
-  cursor: pointer; transition: all 0.18s; white-space: nowrap; backdrop-filter: blur(10px); }
+/* ---------- Filter button + panel ---------- */
+.filter-wrap { position: fixed; z-index: 12; top: 60px; left: clamp(14px, 3vw, 22px); }
+.filter-btn { pointer-events: auto; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 14px; font-weight: 600;
+  color: var(--text); cursor: pointer; padding: 9px 15px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line);
+  backdrop-filter: blur(10px); transition: border-color 0.18s, box-shadow 0.18s; }
+.filter-btn:hover { border-color: var(--line-strong); }
+.filter-btn.on { border-color: rgba(91,158,255,0.55); box-shadow: inset 0 0 0 1px rgba(91,158,255,0.4); }
+.filter-badge { min-width: 18px; height: 18px; padding: 0 5px; display: inline-grid; place-items: center; border-radius: 999px;
+  background: var(--blue); color: #fff; font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.filter-panel { position: absolute; top: calc(100% + 8px); left: 0; width: min(264px, 80vw);
+  background: var(--panel); border: 1px solid var(--line-strong); border-radius: 16px; padding: 12px; backdrop-filter: blur(14px);
+  box-shadow: 0 24px 60px -24px rgba(0,0,0,0.85); transform-origin: top left; animation: fpop 0.2s ease both; }
+@keyframes fpop { from { opacity: 0; transform: translateY(-6px) scale(0.97); } to { opacity: 1; transform: none; } }
+.filter-panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; padding: 0 2px; }
+.filter-panel-head b { font-size: 13px; font-weight: 600; }
+.filter-clear { background: none; border: 0; color: var(--blue); font-family: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; padding: 4px; }
+.filter-clear:hover { color: var(--blue-bright); }
+.filter-list { display: flex; flex-wrap: wrap; gap: 7px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--line); color: var(--text-dim); cursor: pointer; transition: all 0.16s; white-space: nowrap; }
 .chip:hover { color: var(--text); border-color: var(--line-strong); }
 .chip.active { color: var(--text); border-color: var(--chip-color, var(--blue)); box-shadow: inset 0 0 0 1px var(--chip-color, var(--blue)); }
 .chip .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--chip-color, var(--blue)); box-shadow: 0 0 6px var(--chip-color, var(--blue)); }
 .chip .count { color: var(--text-faint); font-variant-numeric: tabular-nums; }
+
+/* ---------- Locate button (bottom-left) ---------- */
+.locate-btn { position: fixed; z-index: 8; left: clamp(14px, 3vw, 22px); bottom: 22px; width: 46px; height: 46px;
+  display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: var(--panel); color: var(--blue-bright);
+  backdrop-filter: blur(10px); cursor: pointer; box-shadow: 0 8px 22px -10px rgba(0,0,0,0.7); transition: transform 0.18s, background 0.18s, color 0.18s, border-color 0.18s; }
+.locate-btn:hover { transform: translateY(-1px); border-color: rgba(91,158,255,0.5); color: #fff; background: var(--blue); }
+.locate-btn.locating svg { animation: spin 0.9s linear infinite; }
 
 /* ---------- Legend ---------- */
 .legend { position: fixed; z-index: 8; left: clamp(14px, 3vw, 22px); bottom: 22px;
@@ -135,8 +151,7 @@ a { color: inherit; text-decoration: none; }
 .maplibregl-popup-tip { border-top-color: #14171d !important; border-bottom-color: #14171d !important; }
 .maplibregl-popup-close-button { color: var(--text-dim); font-size: 20px; padding: 4px 9px; }
 .pop { padding: 14px 15px; }
-.pop-type { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
-.pop-type .dot { width: 8px; height: 8px; border-radius: 50%; }
+.pop-type { display: inline-flex; align-items: center; font-size: 12.5px; font-weight: 600; letter-spacing: 0.01em; }
 .pop h4 { font-size: 15px; margin: 8px 0 6px; font-weight: 600; }
 .pop p { font-size: 13px; color: var(--text-dim); }
 .pop .meta { font-size: 12px; color: var(--text-faint); margin-top: 9px; }
