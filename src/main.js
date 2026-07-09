@@ -224,14 +224,17 @@ function applyFilter() {
   src.setData(geo)
 }
 
-// ---------- Overlays ----------
-function renderLiveCount() {
-  const el = document.getElementById('live-count')
-  const n = EVENTS.filter((e) => coord(e.location?.gps)).length
-  const obj = { v: 0 }
-  gsap.to(obj, { v: n, duration: 1.4, ease: 'power2.out', onUpdate: () => (el.textContent = Math.round(obj.v).toLocaleString('sv-SE')) })
+// ---------- Download modal ----------
+function initDownloadModal() {
+  const modal = document.getElementById('dl-modal')
+  const open = () => { modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false') }
+  const close = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true') }
+  document.getElementById('dl-open').addEventListener('click', open)
+  modal.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close))
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close() })
 }
 
+// ---------- Overlays ----------
 function renderFilters() {
   const counts = {}
   for (const e of EVENTS) if (coord(e.location?.gps)) counts[groupOf(e.type)] = (counts[groupOf(e.type)] || 0) + 1
@@ -267,6 +270,7 @@ function esc(s) {
 // ---------- Boot ----------
 async function boot() {
   initMap()
+  initDownloadModal()
   gsap.from('.brand', { opacity: 0, x: -12, duration: 0.6, ease: 'power2.out' })
   // Events are the page — load and show them immediately.
   try {
@@ -276,7 +280,6 @@ async function boot() {
     document.getElementById('map-loading').innerHTML = 'Kunde inte ladda data just nu.'
     return
   }
-  renderLiveCount()
   renderFilters()
   renderLegend()
   if (map.getSource('events')) pushData()

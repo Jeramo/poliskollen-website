@@ -10,24 +10,19 @@ const browser = await puppeteer.launch({
   args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--no-sandbox', '--hide-scrollbars'],
 })
 
-async function grab(name, { width = 1280, height = 800, geo = null } = {}) {
-  const ctx = browser.defaultBrowserContext()
-  if (geo) await ctx.overridePermissions(URL, ['geolocation'])
-  else await ctx.clearPermissionOverrides()
+async function grab(name, { width = 1280, height = 800, wait = 5000, click = null } = {}) {
   const page = await browser.newPage()
   await page.setViewport({ width, height, deviceScaleFactor: 1 })
-  if (geo) await page.setGeolocation(geo) // {latitude, longitude}
   await page.goto(URL, { waitUntil: 'networkidle2' })
-  await new Promise((r) => setTimeout(r, 5500)) // let the fly-to animation finish
+  await new Promise((r) => setTimeout(r, wait))
+  if (click) { await page.click(click); await new Promise((r) => setTimeout(r, 700)) }
   await page.screenshot({ path: `${OUT}/${name}.png` })
   await page.close()
   console.log('shot', name)
 }
 
-// Default (no geolocation granted) → should settle on Stockholm län.
-await grab('geo-default', {})
-// Granted at Göteborg → should fly to Göteborg.
-await grab('geo-granted', { geo: { latitude: 57.7089, longitude: 11.9746 } })
-await grab('mob', { width: 390, height: 844 })
+await grab('desk', {})
+await grab('modal', { click: '#dl-open' })
+await grab('modal-mob', { width: 390, height: 844, click: '#dl-open' })
 
 await browser.close()
