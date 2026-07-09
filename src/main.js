@@ -121,7 +121,7 @@ function initMap() {
     style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
     center: [16.2, 63.5],
     zoom: 3.5,
-    attributionControl: { compact: true },
+    attributionControl: false, // credit shown as static text in the footer instead
     dragRotate: false,
   })
   map.touchZoomRotate.disableRotation()
