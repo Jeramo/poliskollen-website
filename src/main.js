@@ -11,34 +11,66 @@ let REPORTS = []
 const active = new Set() // active group filters; empty = all
 let map
 
+// Pulsing ring shown at a tapped pin (removed when its popup closes).
+let pulseMarker = null
+function showPulse(lngLat) {
+  removePulse()
+  const el = document.createElement('div')
+  el.className = 'pin-pulse'
+  pulseMarker = new maplibregl.Marker({ element: el, pitchAlignment: 'map' }).setLngLat(lngLat).addTo(map)
+}
+function removePulse() {
+  if (pulseMarker) { pulseMarker.remove(); pulseMarker = null }
+}
+
 const EVT_GLOW = 'evt-glow', EVT_DOT = 'evt-pin', REP_LAYER = 'rep-dot'
 const CLUSTER = 'evt-cluster', CLUSTER_COUNT = 'evt-cluster-count'
 const NOT_CLUSTERED = ['!', ['has', 'point_count']]
 const IS_CLUSTER = ['has', 'point_count']
 
 // ---------- iOS-style pins: colored circle + white glyph ----------
-const PIN_DPR = 2, PIN_PX = 46 * PIN_DPR
+const PIN_DPR = 3, PIN_PX = 46 * PIN_DPR
 function pinKey(type) { return `${typeColor(type)}__${iconName(type)}` }
 
 function makePinImage(colorHex, icon) {
   const c = document.createElement('canvas')
   c.width = c.height = PIN_PX
   const ctx = c.getContext('2d')
-  const cx = PIN_PX / 2, cy = PIN_PX / 2, r = PIN_PX / 2 - 3 * PIN_DPR
-  // drop shadow for depth on the dark map
+  const cx = PIN_PX / 2, cy = PIN_PX / 2, r = PIN_PX / 2 - 3.5 * PIN_DPR
+  const ring = (rr) => { ctx.beginPath(); ctx.arc(cx, cy, rr, 0, Math.PI * 2) }
+
+  // 1. base fill with a soft drop shadow (depth on the dark map)
   ctx.save()
-  ctx.shadowColor = 'rgba(0,0,0,0.55)'; ctx.shadowBlur = 5 * PIN_DPR; ctx.shadowOffsetY = 1.5 * PIN_DPR
-  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fillStyle = colorHex; ctx.fill()
+  ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.shadowBlur = 6 * PIN_DPR; ctx.shadowOffsetY = 2 * PIN_DPR
+  ring(r); ctx.fillStyle = colorHex; ctx.fill()
   ctx.restore()
-  // white ring (matches the app pins)
-  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2)
-  ctx.lineWidth = 2.4 * PIN_DPR; ctx.strokeStyle = 'rgba(255,255,255,0.96)'; ctx.stroke()
-  // white glyph, ~52% of the pin
-  const g = PIN_PX * 0.52
+
+  // 2. vertical gradient for a dimensional "coin" look (lit top, shaded base)
+  const grad = ctx.createLinearGradient(0, cy - r, 0, cy + r)
+  grad.addColorStop(0, 'rgba(255,255,255,0.30)')
+  grad.addColorStop(0.48, 'rgba(255,255,255,0)')
+  grad.addColorStop(1, 'rgba(0,0,0,0.24)')
+  ring(r); ctx.fillStyle = grad; ctx.fill()
+
+  // 3. glossy top highlight
   ctx.save()
+  ctx.beginPath()
+  ctx.ellipse(cx, cy - r * 0.40, r * 0.60, r * 0.34, 0, 0, Math.PI * 2)
+  ctx.fillStyle = 'rgba(255,255,255,0.22)'; ctx.fill()
+  ctx.restore()
+
+  // 4. crisp white ring + faint inner edge for definition
+  ring(r); ctx.lineWidth = 2.6 * PIN_DPR; ctx.strokeStyle = 'rgba(255,255,255,0.98)'; ctx.stroke()
+  ring(r - 2.6 * PIN_DPR); ctx.lineWidth = 1 * PIN_DPR; ctx.strokeStyle = 'rgba(0,0,0,0.12)'; ctx.stroke()
+
+  // 5. white glyph with a subtle shadow for legibility
+  const g = PIN_PX * 0.5
+  ctx.save()
+  ctx.shadowColor = 'rgba(0,0,0,0.28)'; ctx.shadowBlur = 1.4 * PIN_DPR; ctx.shadowOffsetY = 0.6 * PIN_DPR
   ctx.translate(cx - g / 2, cy - g / 2); ctx.scale(g / 24, g / 24)
   ctx.fillStyle = '#fff'; ctx.fill(new Path2D(ICON_PATHS[icon] || ICON_PATHS.shield))
   ctx.restore()
+
   return ctx.getImageData(0, 0, PIN_PX, PIN_PX)
 }
 
@@ -94,6 +126,7 @@ function initMap() {
   })
   map.touchZoomRotate.disableRotation()
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right')
+  if (import.meta.env.DEV) window.__map = map // dev-only handle for verification
 
   map.on('load', () => {
     // Cluster nearby events into a count bubble (like iOS/the app). Clusters
@@ -122,6 +155,15 @@ function initMap() {
         'icon-size': ['interpolate', ['linear'], ['zoom'], 3, 0.42, 7, 0.62, 11, 0.9, 14, 1.05],
       },
     })
+    // Soft glow beneath each cluster bubble.
+    map.addLayer({
+      id: 'evt-cluster-glow', type: 'circle', source: 'events', filter: IS_CLUSTER,
+      paint: {
+        'circle-color': '#5b9eff',
+        'circle-radius': ['step', ['get', 'point_count'], 23, 10, 28, 50, 35, 200, 42],
+        'circle-blur': 1, 'circle-opacity': 0.3,
+      },
+    })
     // Cluster bubble: police-blue circle + white ring + count (mirrors the app).
     map.addLayer({
       id: CLUSTER, type: 'circle', source: 'events', filter: IS_CLUSTER,
@@ -129,7 +171,7 @@ function initMap() {
         'circle-color': '#5b9eff',
         'circle-radius': ['step', ['get', 'point_count'], 16, 10, 20, 50, 26, 200, 32],
         'circle-stroke-color': '#ffffff', 'circle-stroke-width': 2.5,
-        'circle-stroke-opacity': 0.95,
+        'circle-stroke-opacity': 0.96,
       },
     })
     map.addLayer({
@@ -150,25 +192,40 @@ function initMap() {
       },
     })
 
-    const pop = new maplibregl.Popup({ closeButton: true, maxWidth: '300px', offset: 12 })
+    const pop = new maplibregl.Popup({ closeButton: true, maxWidth: '300px', offset: 16 })
+    pop.on('close', removePulse)
+
+    // Smoothly focus a tapped pin: ease the map to it + a pulsing ring, then
+    // the popup animates in (CSS).
+    function focusPin(lngLat, html) {
+      const easeCubic = (t) => 1 - Math.pow(1 - t, 3)
+      map.easeTo({
+        center: lngLat,
+        zoom: Math.max(map.getZoom(), 9.5),
+        duration: 620, easing: easeCubic, offset: [0, 60],
+      })
+      showPulse(lngLat)
+      pop.setLngLat(lngLat).setHTML(html).addTo(map)
+    }
+
     map.on('click', EVT_DOT, (e) => {
       const p = e.features[0].properties
-      pop.setLngLat(e.features[0].geometry.coordinates).setHTML(`
+      focusPin(e.features[0].geometry.coordinates, `
         <div class="pop">
           <span class="pop-type" style="color:${p.color}"><span class="dot" style="background:${p.color}"></span>${esc(p.type)}</span>
           <h4>${esc(p.name)}</h4>
           ${p.summary ? `<p>${esc(p.summary)}</p>` : ''}
           <div class="meta">${esc([p.place, p.region].filter(Boolean).join(', '))} · ${esc(p.time)}</div>
-        </div>`).addTo(map)
+        </div>`)
     })
     map.on('click', REP_LAYER, (e) => {
       const p = e.features[0].properties
-      pop.setLngLat(e.features[0].geometry.coordinates).setHTML(`
+      focusPin(e.features[0].geometry.coordinates, `
         <div class="pop">
           <span class="pop-type" style="color:#5b9eff"><span class="dot" style="background:#5b9eff"></span>Community-rapport</span>
           <h4>${esc(p.category)}</h4>
           <div class="meta">${p.confirm} bekräftelser · anonym</div>
-        </div>`).addTo(map)
+        </div>`)
     })
     // Tap a cluster → zoom in until it breaks apart (iOS behaviour).
     map.on('click', CLUSTER, async (e) => {
@@ -255,14 +312,6 @@ function renderFilters() {
   gsap.from('.filterbar', { opacity: 0, y: -8, duration: 0.5, ease: 'power2.out' })
 }
 
-function renderLegend() {
-  document.getElementById('legend').innerHTML = GROUPS
-    .filter((g) => EVENTS.some((e) => groupOf(e.type) === g.key && coord(e.location?.gps)))
-    .map((g) => `<div class="row"><span class="dot" style="background:${g.color}"></span>${g.label}</div>`)
-    .join('')
-  gsap.from('.legend', { opacity: 0, x: -12, duration: 0.6, ease: 'power2.out' })
-}
-
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
 }
@@ -281,7 +330,6 @@ async function boot() {
     return
   }
   renderFilters()
-  renderLegend()
   if (map.getSource('events')) pushData()
   else map.on('load', pushData)
   // Community reports are a soft overlay — fetch after, never block the map.
