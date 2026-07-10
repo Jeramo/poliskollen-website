@@ -23,6 +23,16 @@ function removePulse() {
   if (pulseMarker) { pulseMarker.remove(); pulseMarker = null }
 }
 
+// Persistent "here you are" puck: a solid dot + a pulsing ring at the user's spot.
+let userMarker = null
+function showUserLocation(lngLat) {
+  const el = document.createElement('div')
+  el.className = 'user-loc'
+  el.innerHTML = '<span class="ring"></span><span class="dot"></span>'
+  if (userMarker) userMarker.remove()
+  userMarker = new maplibregl.Marker({ element: el }).setLngLat(lngLat).addTo(map)
+}
+
 const EVT_GLOW = 'evt-glow', EVT_DOT = 'evt-pin', REP_LAYER = 'rep-dot'
 const CLUSTER = 'evt-cluster', CLUSTER_COUNT = 'evt-cluster-count'
 const NOT_CLUSTERED = ['!', ['has', 'point_count']]
@@ -295,10 +305,11 @@ function flyToUserOrDefault() {
   const fallback = () => map.easeTo({ ...STOCKHOLM, duration: 2200, easing: easeCubic })
   if (!('geolocation' in navigator)) return fallback()
   navigator.geolocation.getCurrentPosition(
-    (pos) => map.easeTo({
-      center: [pos.coords.longitude, pos.coords.latitude], zoom: 10.5,
-      duration: 2600, easing: easeCubic,
-    }),
+    (pos) => {
+      const c = [pos.coords.longitude, pos.coords.latitude]
+      showUserLocation(c)
+      map.easeTo({ center: c, zoom: 10.5, duration: 2600, easing: easeCubic })
+    },
     fallback, // denied / error → Stockholm län
     { enableHighAccuracy: false, timeout: 6000, maximumAge: 60000 },
   )
@@ -389,7 +400,9 @@ function initLocateButton() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         btn.classList.remove('locating')
-        map.flyTo({ center: [pos.coords.longitude, pos.coords.latitude], zoom: 12, duration: 1500, essential: true })
+        const c = [pos.coords.longitude, pos.coords.latitude]
+        showUserLocation(c)
+        map.flyTo({ center: c, zoom: 12, duration: 1500, essential: true })
       },
       () => btn.classList.remove('locating'),
       { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 },
