@@ -2,7 +2,7 @@ import './style.css'
 import maplibregl from 'maplibre-gl'
 import { gsap } from 'gsap'
 import { fetchEvents, fetchReports } from './api.js'
-import { typeColor, groupOf, GROUPS, timeAgo, coord } from './eventTypes.js'
+import { typeColor, groupOf, GROUPS, timeAgo, coord, regionPlausible } from './eventTypes.js'
 import { iconName, ICON_PATHS, REPORT_CATS } from './eventIcons.js'
 
 // ---------- State ----------
@@ -93,12 +93,20 @@ function ensurePinImages(features) {
   }
 }
 
+// Parsed [lng,lat] for an event, or null if unparseable OR the coordinate
+// clearly doesn't match the event's region (bad source data).
+function eventLngLat(e) {
+  const c = coord(e.location?.gps)
+  if (!c) return null
+  return regionPlausible(c[1], c[0], e.location?.region) ? c : null
+}
+
 // ---------- GeoJSON ----------
 function eventsGeoJSON(list) {
   return {
     type: 'FeatureCollection',
     features: list.map((e) => {
-      const c = coord(e.location?.gps)
+      const c = eventLngLat(e)
       if (!c) return null
       return {
         type: 'Feature',
@@ -350,7 +358,7 @@ function initDownloadModal() {
 // ---------- Overlays ----------
 function renderFilters() {
   const counts = {}
-  for (const e of EVENTS) if (coord(e.location?.gps)) counts[groupOf(e.type)] = (counts[groupOf(e.type)] || 0) + 1
+  for (const e of EVENTS) if (eventLngLat(e)) counts[groupOf(e.type)] = (counts[groupOf(e.type)] || 0) + 1
   const el = document.getElementById('filters')
   el.innerHTML = ''
   GROUPS.filter((g) => counts[g.key]).forEach((g) => {

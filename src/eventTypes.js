@@ -59,3 +59,43 @@ export function coord(gps) {
   if (isNaN(lat) || isNaN(lng)) return null
   return [lng, lat] // GeoJSON order
 }
+
+// Rough per-län bounding boxes [latMin, latMax, lngMin, lngMax] (margin baked in).
+// Used to drop events whose source coordinate clearly doesn't match their region
+// (Polisen occasionally returns a wrong point — e.g. a Pajala event at a
+// Stockholm coordinate).
+const REGION_BBOX = {
+  norrbotten: [64.8, 69.2, 15.3, 24.3],
+  västerbotten: [63.0, 66.3, 14.3, 21.6],
+  jämtland: [61.3, 65.2, 11.9, 16.7],
+  västernorrland: [62.0, 64.5, 14.8, 19.2],
+  gävleborg: [60.0, 62.6, 14.3, 17.7],
+  dalarna: [59.7, 62.5, 11.8, 16.8],
+  värmland: [58.3, 60.8, 11.3, 14.7],
+  örebro: [58.5, 60.1, 13.8, 16.1],
+  västmanland: [59.1, 60.4, 14.8, 17.1],
+  uppsala: [59.4, 60.9, 16.3, 18.8],
+  stockholm: [58.7, 60.4, 16.8, 19.4],
+  södermanland: [58.5, 59.9, 15.5, 18.1],
+  östergötland: [57.5, 59.2, 14.4, 17.4],
+  'västra götaland': [56.9, 59.4, 10.7, 14.9],
+  jönköping: [56.7, 58.4, 12.8, 16.1],
+  kalmar: [56.0, 58.3, 15.2, 17.5],
+  kronoberg: [56.1, 57.5, 13.0, 16.1],
+  halland: [56.1, 57.8, 11.8, 13.8],
+  blekinge: [55.7, 56.7, 14.1, 16.2],
+  skåne: [55.1, 56.7, 12.2, 14.8],
+  gotland: [56.7, 58.2, 17.9, 19.6],
+}
+
+export function regionPlausible(lat, lng, region) {
+  if (!region) return true
+  const r = String(region).toLowerCase()
+  for (const key in REGION_BBOX) {
+    if (r.includes(key)) {
+      const [laMin, laMax, loMin, loMax] = REGION_BBOX[key]
+      return lat >= laMin && lat <= laMax && lng >= loMin && lng <= loMax
+    }
+  }
+  return true // unknown region → keep
+}
