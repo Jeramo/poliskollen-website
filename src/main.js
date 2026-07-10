@@ -3,7 +3,7 @@ import maplibregl from 'maplibre-gl'
 import { gsap } from 'gsap'
 import { fetchEvents, fetchReports } from './api.js'
 import { typeColor, groupOf, GROUPS, timeAgo, coord } from './eventTypes.js'
-import { iconName, ICON_PATHS } from './eventIcons.js'
+import { iconName, ICON_PATHS, REPORT_CATS } from './eventIcons.js'
 
 // ---------- State ----------
 let EVENTS = []
@@ -109,8 +109,42 @@ function reportsGeoJSON(list) {
     features: list.map((r) => ({
       type: 'Feature',
       geometry: { type: 'Point', coordinates: [r.longitude, r.latitude] },
-      properties: { category: r.category, confirm: r.confirm_count || 0 },
+      properties: {
+        category: r.category, iconKey: `report-${r.category}`,
+        confirm: r.confirm_count || 0, trusted: !!r.trusted, created: r.created_at || '',
+      },
     })),
+  }
+}
+
+// Community-report pin: white circle, dashed police-blue ring, blue category
+// glyph — visibly distinct from the filled official-event pins (like the app).
+function makeReportPin(category) {
+  const cat = REPORT_CATS[category] || REPORT_CATS.police
+  const c = document.createElement('canvas')
+  c.width = c.height = PIN_PX
+  const ctx = c.getContext('2d')
+  const cx = PIN_PX / 2, cy = PIN_PX / 2, r = PIN_PX / 2 - 3.5 * PIN_DPR
+  ctx.save()
+  ctx.shadowColor = 'rgba(0,0,0,0.45)'; ctx.shadowBlur = 6 * PIN_DPR; ctx.shadowOffsetY = 2 * PIN_DPR
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill()
+  ctx.restore()
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2)
+  ctx.lineWidth = 2.4 * PIN_DPR; ctx.strokeStyle = '#5b9eff'
+  ctx.setLineDash([4 * PIN_DPR, 2.6 * PIN_DPR]); ctx.stroke(); ctx.setLineDash([])
+  const g = PIN_PX * 0.5
+  ctx.save()
+  ctx.translate(cx - g / 2, cy - g / 2); ctx.scale(g / 24, g / 24)
+  ctx.fillStyle = '#5b9eff'; ctx.fill(new Path2D(ICON_PATHS[cat.icon] || ICON_PATHS.shield))
+  ctx.restore()
+  return ctx.getImageData(0, 0, PIN_PX, PIN_PX)
+}
+
+function ensureReportImages(features) {
+  const cats = new Set(features.map((f) => f.properties.category))
+  for (const cat of cats) {
+    const k = `report-${cat}`
+    if (!map.hasImage(k)) map.addImage(k, makeReportPin(cat), { pixelRatio: PIN_DPR })
   }
 }
 
@@ -184,11 +218,13 @@ function initMap() {
       },
       paint: { 'text-color': '#ffffff' },
     })
+    // Community reports: dashed-ring pin with the category glyph.
     map.addLayer({
-      id: REP_LAYER, type: 'circle', source: 'reports',
-      paint: {
-        'circle-color': 'rgba(91,158,255,0.15)', 'circle-radius': 8,
-        'circle-stroke-color': '#5b9eff', 'circle-stroke-width': 2,
+      id: REP_LAYER, type: 'symbol', source: 'reports',
+      layout: {
+        'icon-image': ['get', 'iconKey'],
+        'icon-allow-overlap': true, 'icon-ignore-placement': true,
+        'icon-size': ['interpolate', ['linear'], ['zoom'], 3, 0.42, 7, 0.62, 11, 0.9, 14, 1.05],
       },
     })
 
@@ -220,11 +256,17 @@ function initMap() {
     })
     map.on('click', REP_LAYER, (e) => {
       const p = e.features[0].properties
+      const cat = REPORT_CATS[p.category] || { label: p.category }
+      const trusted = p.trusted
+        ? `<div class="pop-trusted"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="#5b9eff" d="M12 2 9.6 4.2 6.4 4l-.9 3.1L2.6 8.4 4 11.3 2.6 14.2l2.9 1.3.9 3.1 3.2-.2L12 20l2.4-1.6 3.2.2.9-3.1 2.9-1.3-1.4-2.9 1.4-2.9-2.9-1.3-.9-3.1-3.2.2L12 2Zm-1.3 12.6L8 11.9l1.2-1.2 1.5 1.5 3.9-3.9 1.2 1.2-5.1 5.1Z"/></svg> Betrodd rapportör</div>`
+        : ''
       focusPin(e.features[0].geometry.coordinates, `
         <div class="pop">
           <span class="pop-type" style="color:#5b9eff">Community-rapport</span>
-          <h4>${esc(p.category)}</h4>
-          <div class="meta">${p.confirm} bekräftelser · anonym</div>
+          <h4>${esc(cat.label)}</h4>
+          ${trusted}
+          <div class="meta">${p.confirm} bekräftelser · ${esc(timeAgo(p.created))}</div>
+          <div class="pop-note">Rapporterad av en användare, inte verifierad av polisen.</div>
         </div>`)
     })
     // Tap a cluster → zoom in until it breaks apart (iOS behaviour).
@@ -266,7 +308,9 @@ function pushData() {
   const geo = eventsGeoJSON(EVENTS)
   ensurePinImages(geo.features) // add pin images before the layer references them
   map.getSource('events')?.setData(geo)
-  map.getSource('reports')?.setData(reportsGeoJSON(REPORTS))
+  const rgeo = reportsGeoJSON(REPORTS)
+  ensureReportImages(rgeo.features)
+  map.getSource('reports')?.setData(rgeo)
   document.getElementById('map-loading').classList.add('hidden')
 }
 
@@ -421,6 +465,14 @@ async function boot() {
   initSearch()
   initFilterUI()
   initLocateButton()
+  if (import.meta.env.DEV) {
+    window.__mockReports = (arr) => {
+      REPORTS = arr
+      const g = reportsGeoJSON(REPORTS)
+      ensureReportImages(g.features)
+      map.getSource('reports')?.setData(g)
+    }
+  }
   gsap.from('.brand', { opacity: 0, x: -12, duration: 0.6, ease: 'power2.out' })
   // Events are the page — load and show them immediately.
   try {
@@ -435,7 +487,11 @@ async function boot() {
   else map.on('load', pushData)
   // Community reports are a soft overlay — fetch after, never block the map.
   fetchReports()
-    .then((r) => { REPORTS = r; map.getSource('reports')?.setData(reportsGeoJSON(REPORTS)) })
+    .then((r) => {
+      REPORTS = r
+      const rgeo = reportsGeoJSON(REPORTS)
+      if (map.getSource('reports')) { ensureReportImages(rgeo.features); map.getSource('reports').setData(rgeo) }
+    })
     .catch(() => {})
 }
 boot()

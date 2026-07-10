@@ -36,4 +36,17 @@ export const ICON_PATHS = {
   doc: 'M6.5 2h6.7l5.3 5.3V20a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm6.5 1.7V7.5h3.8L13 3.7ZM8.2 11h7.6v1.5H8.2V11Zm0 3.2h7.6v1.5H8.2v-1.5Zm0 3.2h5v1.5h-5v-1.5Z',
   scissors: 'M8 4a3 3 0 1 0 0 6 3 3 0 0 0 1.6-.47L11.7 12l-2.1 2.47A3 3 0 1 0 11 16.5L20 6.4V4.7l-6.7 4.5-2-2.4A3 3 0 0 0 8 4Zm0 4.4a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8Zm0 9.1a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8Z',
   shield: 'M12 2 4 5v6c0 5 3.4 8.9 8 11 4.6-2.1 8-6 8-11V5l-8-3Z',
+  police: 'M12 2 4 5v6c0 5 3.4 8.9 8 11 4.6-2.1 8-6 8-11V5l-8-3Zm0 4.1 1.36 2.76 3.04.44-2.2 2.15.52 3.03L12 17.02l-2.72 1.43.52-3.03-2.2-2.15 3.04-.44L12 6.1Z',
+  beacon: 'M11 2h2v3.1h-2V2ZM4.9 4.5l1.4-1.4 2.1 2.1-1.4 1.4-2.1-2.1Zm11.7.7 2.1-2.1 1.4 1.4-2.1 2.1-1.4-1.4ZM12 7.2a4.8 4.8 0 0 0-4.8 4.8v.8h9.6v-.8A4.8 4.8 0 0 0 12 7.2ZM6 14.4h12v2H6v-2Zm1.6 3.4h8.8v3H7.6v-3Z',
+  people: 'M8.2 11.2a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm7.6 0a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm-7.6 1.4c-2.4 0-4.4 1.25-4.4 3.2V18h8.8v-2.2c0-1.95-2-3.2-4.4-3.2Zm7.6 0c-.5 0-1 .05-1.45.16 1.1.78 1.85 1.86 1.85 3.04V18H20.2v-2.2c0-1.95-2-3.2-4.4-3.2Z',
+}
+
+// Community report categories → Swedish label + glyph (mirrors the app's ReportCategory).
+export const REPORT_CATS = {
+  police: { label: 'Polis på plats', icon: 'police' },
+  accident: { label: 'Trafikolycka', icon: 'car' },
+  hazard: { label: 'Väghinder', icon: 'triangle' },
+  fire: { label: 'Brand eller rök', icon: 'flame' },
+  sirens: { label: 'Utryckning', icon: 'beacon' },
+  crowd: { label: 'Folksamling', icon: 'people' },
 }

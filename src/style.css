@@ -180,6 +180,8 @@ a { color: inherit; text-decoration: none; }
 .pop h4 { font-size: 15px; margin: 8px 0 6px; font-weight: 600; }
 .pop p { font-size: 13px; color: var(--text-dim); }
 .pop .meta { font-size: 12px; color: var(--text-faint); margin-top: 9px; }
+.pop-trusted { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--blue); margin-top: 3px; }
+.pop-note { font-size: 11.5px; color: var(--text-faint); margin-top: 9px; line-height: 1.4; }
 
 @media (max-width: 560px) {
   .attrib { max-width: 92vw; bottom: 4px; }
