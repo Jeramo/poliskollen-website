@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="sv" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0B0D10" />
+    <meta name="description" content="Support och vanliga frågor för Poliskollen." />
+    <title>Support — Poliskollen</title>
+    <link rel="icon" type="image/png" href="/poliskollen-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root { --bg:#0b0d10; --panel:#14171d; --line:rgba(255,255,255,.09); --text:#e9edf4; --dim:#a0a9b8; --faint:#6b7280; --blue:#5b9eff; --blue2:#7db2ff; --deep:#2f6bd6;
+        --font:'Geist',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; }
+      * { box-sizing:border-box; margin:0; padding:0; }
+      body { font-family:var(--font); background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; line-height:1.6; }
+      a { color:var(--blue2); text-decoration:none; } a:hover { text-decoration:underline; }
+      .top { position:sticky; top:0; z-index:10; display:flex; align-items:center; gap:14px; padding:14px clamp(16px,4vw,40px);
+        background:linear-gradient(to bottom,rgba(11,13,16,.92),rgba(11,13,16,.6)); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
+      .brand { display:flex; align-items:center; gap:10px; }
+      .brand img.ic { width:28px; height:28px; border-radius:8px; box-shadow:0 0 0 1px rgba(255,255,255,.12); }
+      .brand img.wm { height:24px; }
+      .back { margin-left:auto; font-size:14px; font-weight:600; color:var(--dim); padding:8px 14px; border:1px solid var(--line); border-radius:999px; }
+      .back:hover { color:#fff; text-decoration:none; border-color:rgba(255,255,255,.2); }
+      main { max-width:720px; margin:0 auto; padding:clamp(32px,6vw,64px) clamp(16px,4vw,40px) 100px; }
+      h1 { font-size:clamp(30px,6vw,44px); font-weight:800; letter-spacing:-.02em; }
+      .lead { color:var(--dim); font-size:16px; margin:12px 0 34px; }
+      h2 { font-size:22px; font-weight:700; margin:36px 0 14px; }
+      .faq { display:flex; flex-direction:column; gap:10px; }
+      .qa { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px 18px; }
+      .qa h3 { font-size:16px; font-weight:600; margin-bottom:6px; }
+      .qa p { color:var(--dim); font-size:14.5px; }
+      .contact { margin-top:14px; background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:22px; }
+      .contact p { color:var(--dim); font-size:14.5px; margin-bottom:14px; }
+      label { display:block; font-size:13px; color:var(--dim); margin:12px 0 6px; }
+      input, textarea { width:100%; background:#0a0c0f; border:1px solid var(--line); border-radius:10px; color:var(--text); font-family:inherit; font-size:14px; padding:11px 13px; outline:none; }
+      input:focus, textarea:focus { border-color:rgba(91,158,255,.5); }
+      textarea { min-height:110px; resize:vertical; }
+      button { margin-top:16px; font-family:inherit; font-size:15px; font-weight:600; color:#fff; cursor:pointer; border:0; border-radius:999px;
+        padding:12px 24px; background:linear-gradient(120deg,var(--blue),var(--deep)); box-shadow:0 10px 26px -10px rgba(91,158,255,.6); }
+      button:hover { transform:translateY(-1px); } button:disabled { opacity:.6; cursor:default; transform:none; }
+      .mail { display:inline-flex; align-items:center; gap:8px; margin-top:16px; font-weight:600; }
+      .ok { color:#34c759; font-weight:600; padding:8px 0; } .err { color:#ff5e3a; font-size:13px; padding:6px 0; }
+      .muted { color:var(--faint); font-size:12.5px; margin-top:30px; }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="/" aria-label="Poliskollen">
+        <img class="ic" src="/poliskollen-icon.png" alt="" />
+        <img class="wm" src="/poliskollen-wordmark.png" alt="Poliskollen" />
+      </a>
+      <a class="back" href="/">Till kartan</a>
+    </header>
+    <main>
+      <h1>Support</h1>
+      <p class="lead">Har du en fråga eller stött på ett problem? Här hittar du svar och kan kontakta oss.</p>
+
+      <h2>Vanliga frågor</h2>
+      <div class="faq">
+        <div class="qa"><h3>Hur aktiverar jag push-notiser?</h3><p>Gå till Inställningar i appen och aktivera notiser för de områden du vill bevaka.</p></div>
+        <div class="qa"><h3>Är appen gratis?</h3><p>Ja! Grundfunktionerna är helt gratis. Premium-prenumeration låser upp extra funktioner.</p></div>
+        <div class="qa"><h3>Varifrån kommer informationen?</h3><p>All information hämtas direkt från Polismyndighetens öppna API och publiceras ursprungligen på <a href="https://polisen.se/aktuellt/handelser/" target="_blank" rel="noopener">polisen.se</a>. Varje händelse i appen länkar tillbaka till sin originalrapport.</p></div>
+      </div>
+
+      <h2>Kontakta oss</h2>
+      <div class="contact">
+        <p>Skriv till oss så återkommer vi via e-post så snart vi kan.</p>
+        <form id="cform">
+          <label for="email">Din e-postadress</label>
+          <input id="email" name="email" type="email" required placeholder="du@exempel.se" />
+          <label for="message">Meddelande</label>
+          <textarea id="message" name="message" required placeholder="Hur kan vi hjälpa till?"></textarea>
+          <div id="cstate"></div>
+          <button id="cbtn" type="submit">Skicka</button>
+        </form>
+        <a class="mail" href="mailto:support@poliskollen.nu?subject=Poliskollen%20Support">support@poliskollen.nu</a>
+      </div>
+
+      <p class="muted">Poliskollen är inte officiellt kopplat till Polismyndigheten. Data hämtas från Polisens öppna API.</p>
+    </main>
+    <script>
+      const form = document.getElementById('cform')
+      const btn = document.getElementById('cbtn')
+      const state = document.getElementById('cstate')
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        btn.disabled = true; state.innerHTML = ''
+        try {
+          const res = await fetch('https://formspree.io/f/mvgqyvgn', {
+            method: 'POST', headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: document.getElementById('email').value, message: document.getElementById('message').value }),
+          })
+          if (!res.ok) throw new Error()
+          form.querySelectorAll('input,textarea,button').forEach((el) => (el.style.display = 'none'))
+          state.innerHTML = '<div class="ok">Tack! Vi återkommer via e-post så snart som möjligt.</div>'
+        } catch {
+          btn.disabled = false
+          state.innerHTML = '<div class="err">Kunde inte skicka. Mejla oss direkt på support@poliskollen.nu.</div>'
+        }
+      })
+    </script>
+  </body>
+</html>

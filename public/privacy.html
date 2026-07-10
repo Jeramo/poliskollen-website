@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="sv" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0B0D10" />
+    <meta name="description" content="Integritetspolicy för Poliskollen." />
+    <title>Integritetspolicy — Poliskollen</title>
+    <link rel="icon" type="image/png" href="/poliskollen-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root { --bg:#0b0d10; --panel:#14171d; --line:rgba(255,255,255,.09); --text:#e9edf4; --dim:#a0a9b8; --faint:#6b7280; --blue:#5b9eff; --blue2:#7db2ff;
+        --font:'Geist',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; }
+      * { box-sizing:border-box; margin:0; padding:0; }
+      body { font-family:var(--font); background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; line-height:1.65; }
+      a { color:var(--blue2); text-decoration:none; } a:hover { text-decoration:underline; }
+      .top { position:sticky; top:0; z-index:10; display:flex; align-items:center; gap:14px; padding:14px clamp(16px,4vw,40px);
+        background:linear-gradient(to bottom,rgba(11,13,16,.92),rgba(11,13,16,.6)); backdrop-filter:blur(12px); border-bottom:1px solid var(--line); }
+      .brand { display:flex; align-items:center; gap:10px; }
+      .brand img.ic { width:28px; height:28px; border-radius:8px; box-shadow:0 0 0 1px rgba(255,255,255,.12); }
+      .brand img.wm { height:24px; }
+      .back { margin-left:auto; font-size:14px; font-weight:600; color:var(--dim); display:inline-flex; align-items:center; gap:6px;
+        padding:8px 14px; border:1px solid var(--line); border-radius:999px; }
+      .back:hover { color:#fff; text-decoration:none; border-color:rgba(255,255,255,.2); }
+      main { max-width:760px; margin:0 auto; padding:clamp(32px,6vw,64px) clamp(16px,4vw,40px) 100px; }
+      h1 { font-size:clamp(30px,6vw,44px); font-weight:800; letter-spacing:-.02em; margin-bottom:6px; }
+      .eff { color:var(--faint); font-size:14px; margin-bottom:30px; }
+      #doc h2 { font-size:22px; font-weight:700; letter-spacing:-.01em; margin:32px 0 12px; padding-top:6px; }
+      #doc h3 { font-size:17px; font-weight:600; margin:22px 0 8px; color:var(--blue2); }
+      #doc p { color:var(--text); margin:12px 0; }
+      #doc ul { margin:10px 0 10px 4px; padding:0; list-style:none; }
+      #doc li { position:relative; padding-left:20px; margin:7px 0; color:var(--dim); }
+      #doc li::before { content:''; position:absolute; left:4px; top:10px; width:5px; height:5px; border-radius:50%; background:var(--blue); }
+      #doc strong { color:#fff; font-weight:600; }
+      #doc hr { border:0; border-top:1px solid var(--line); margin:28px 0; }
+      .state { color:var(--dim); padding:40px 0; }
+    </style>
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="/" aria-label="Poliskollen">
+        <img class="ic" src="/poliskollen-icon.png" alt="" />
+        <img class="wm" src="/poliskollen-wordmark.png" alt="Poliskollen" />
+      </a>
+      <a class="back" href="/">Till kartan</a>
+    </header>
+    <main>
+      <h1>Integritetspolicy</h1>
+      <div class="eff" id="eff"></div>
+      <div id="doc"><div class="state">Laddar…</div></div>
+    </main>
+    <script>
+      function fmt(s) {
+        s = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        s = s.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, '<a href="mailto:$1">$1</a>')
+        s = s.replace(/(https?:\/\/[^\s<)]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')
+        return s
+      }
+      function render(text) {
+        const lines = text.split('\n'); let html = ''; let para = []; let list = null; let effSet = false
+        const flushP = () => { if (para.length) { html += '<p>' + fmt(para.join(' ')) + '</p>'; para = [] } }
+        const flushL = () => { if (list) { html += '<ul>' + list.map((i) => '<li>' + i + '</li>').join('') + '</ul>'; list = null } }
+        for (const raw of lines) {
+          const line = raw
+          if (line.startsWith('# ') && !line.startsWith('## ')) { flushP(); flushL(); continue }
+          if (/^\*\*Effective Date/i.test(line.trim()) && !effSet) { document.getElementById('eff').innerHTML = fmt(line.trim()); effSet = true; continue }
+          if (line.startsWith('## ')) { flushP(); flushL(); html += '<h2>' + fmt(line.slice(3)) + '</h2>'; continue }
+          if (line.startsWith('### ')) { flushP(); flushL(); html += '<h3>' + fmt(line.slice(4)) + '</h3>'; continue }
+          if (line.trim() === '---') { flushP(); flushL(); html += '<hr>'; continue }
+          if (line.startsWith('- ')) { flushP(); if (!list) list = []; list.push(fmt(line.slice(2))); continue }
+          if (line.trim() === '') { flushP(); flushL(); continue }
+          para.push(line.trim())
+        }
+        flushP(); flushL()
+        document.getElementById('doc').innerHTML = html
+      }
+      fetch('https://jeanrobert.dev/policies/privacy-poliskollen.txt')
+        .then((r) => { if (!r.ok) throw new Error(); return r.text() })
+        .then(render)
+        .catch(() => { document.getElementById('doc').innerHTML = '<div class="state">Kunde inte ladda integritetspolicyn just nu. Kontakta <a href="mailto:support@poliskollen.nu">support@poliskollen.nu</a>.</div>' })
+    </script>
+  </body>
+</html>
