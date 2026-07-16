@@ -302,25 +302,16 @@ function initMap() {
     }
 
     if (EVENTS.length) pushData()
-    flyToUserOrDefault()
+    flyToStockholm()
   })
 }
 
-// Ask for the user's position and fly there; otherwise default to Stockholm län.
-function flyToUserOrDefault() {
+// Start on Stockholm län without asking for location permission. Geolocation is
+// only requested from initLocateButton() after the user presses the button.
+function flyToStockholm() {
   const easeCubic = (t) => 1 - Math.pow(1 - t, 3)
   const STOCKHOLM = { center: [18.0686, 59.3293], zoom: 8.5 } // Stockholm län
-  const fallback = () => map.easeTo({ ...STOCKHOLM, duration: 2200, easing: easeCubic })
-  if (!('geolocation' in navigator)) return fallback()
-  navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      const c = [pos.coords.longitude, pos.coords.latitude]
-      showUserLocation(c)
-      map.easeTo({ center: c, zoom: 10.5, duration: 2600, easing: easeCubic })
-    },
-    fallback, // denied / error → Stockholm län
-    { enableHighAccuracy: false, timeout: 6000, maximumAge: 60000 },
-  )
+  map.easeTo({ ...STOCKHOLM, duration: 2200, easing: easeCubic })
 }
 
 function pushData() {
