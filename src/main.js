@@ -280,7 +280,7 @@ function initMap() {
           <h4>${esc(p.name)}</h4>
           ${p.summary ? `<p>${esc(p.summary)}</p>` : ''}
           <div class="meta">${esc([p.place, p.region].filter(Boolean).join(', '))}</div>
-          <div class="meta">Händelsetid ${esc(p.eventTime)} · ${esc(p.time)}</div>
+          <div class="meta">Händelsetid ${esc(p.eventTime)}, ${esc(p.time)}</div>
           <a class="pop-source" href="${esc(p.url)}" target="_blank" rel="noopener">Källa: Polismyndigheten</a>
         </div>`)
     })
@@ -295,7 +295,7 @@ function initMap() {
           <span class="pop-type" style="color:#5b9eff">Community-rapport</span>
           <h4>${esc(cat.label)}</h4>
           ${trusted}
-          <div class="meta">${p.confirm} bekräftelser · ${esc(timeAgo(p.created))}</div>
+          <div class="meta">${p.confirm} bekräftelser, ${esc(timeAgo(p.created))}</div>
           <div class="pop-note">Rapporterad av en användare, inte verifierad av polisen.</div>
         </div>`)
     })
