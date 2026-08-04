@@ -2,7 +2,7 @@ import './style.css'
 import maplibregl from 'maplibre-gl'
 import { gsap } from 'gsap'
 import { fetchEvents, fetchReports } from './api.js'
-import { typeColor, groupOf, GROUPS, timeAgo, coord, regionPlausible } from './eventTypes.js'
+import { typeColor, groupOf, GROUPS, parseDate, timeAgo, coord, regionPlausible } from './eventTypes.js'
 import { iconName, ICON_PATHS, REPORT_CATS } from './eventIcons.js'
 
 // ---------- State ----------
@@ -101,6 +101,14 @@ function eventLngLat(e) {
   return regionPlausible(c[1], c[0], e.location?.region) ? c : null
 }
 
+function eventTimeLabel(datetime) {
+  const date = parseDate(datetime)
+  if (!date) return ''
+  return date.toLocaleString('sv-SE', {
+    day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit',
+  })
+}
+
 // ---------- GeoJSON ----------
 function eventsGeoJSON(list) {
   return {
@@ -115,6 +123,8 @@ function eventsGeoJSON(list) {
           id: e.id, color: typeColor(e.type), group: groupOf(e.type), iconKey: pinKey(e.type),
           type: e.type, name: e.name, region: e.location?.region || '',
           place: e.location?.name || '', time: timeAgo(e.datetime),
+          eventTime: eventTimeLabel(e.datetime),
+          url: e.url ? new URL(e.url, 'https://polisen.se').href : '',
           summary: e.summary || '',
         },
       }
@@ -269,7 +279,9 @@ function initMap() {
           <span class="pop-type" style="color:${p.color}">${esc(p.type)}</span>
           <h4>${esc(p.name)}</h4>
           ${p.summary ? `<p>${esc(p.summary)}</p>` : ''}
-          <div class="meta">${esc([p.place, p.region].filter(Boolean).join(', '))} · ${esc(p.time)}</div>
+          <div class="meta">${esc([p.place, p.region].filter(Boolean).join(', '))}</div>
+          <div class="meta">Händelsetid ${esc(p.eventTime)} · ${esc(p.time)}</div>
+          <a class="pop-source" href="${esc(p.url)}" target="_blank" rel="noopener">Källa: Polismyndigheten</a>
         </div>`)
     })
     map.on('click', REP_LAYER, (e) => {

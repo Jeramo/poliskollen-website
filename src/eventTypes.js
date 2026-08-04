@@ -31,7 +31,10 @@ export function groupOf(type) {
 // The worker sends "2026-07-09 22:00:34 +02:00" — normalise to ISO before Date().
 export function parseDate(dt) {
   if (!dt) return null
-  const iso = String(dt).replace(' ', 'T').replace(/\s(?=[+-]\d{2}:\d{2}$)/, '')
+  const iso = String(dt)
+    .replace(/^(\d{4}-\d{2}-\d{2}) (\d):/, '$1T0$2:')
+    .replace(/^(\d{4}-\d{2}-\d{2}) /, '$1T')
+    .replace(/\s(?=[+-]\d{2}:\d{2}$)/, '')
   const d = new Date(iso)
   return isNaN(d) ? null : d
 }
